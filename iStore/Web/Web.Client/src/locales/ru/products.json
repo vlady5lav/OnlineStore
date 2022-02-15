@@ -1,0 +1,13 @@
+{
+  "title": "Products",
+  "error": {
+    "empty": "Empty"
+  },
+  "placeholder": {
+    "title": "Title"
+  },
+  "properties": {
+    "title": "Title",
+    "description": "Description"
+  }
+}

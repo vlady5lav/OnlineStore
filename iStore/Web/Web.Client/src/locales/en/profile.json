@@ -1,0 +1,8 @@
+{
+  "title": "Profile",
+  "info": {
+    "email": "Email",
+    "firstName": "First Name",
+    "lastName": "Last Name"
+  }
+}

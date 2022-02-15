@@ -1,0 +1,31 @@
+{
+  "autoFormat": "onSave",
+  "bracketSpacing": true,
+  "configurationFileName": "import-sorter.json",
+  "development.enableDebug": false,
+  "emptyLinesAfterAllImports": 1,
+  "emptyLinesBetweenGroups": 1,
+  "exclude": ["node_modules", ".yarn"],
+  "excludeGlob": [],
+  "force": false,
+  "formatExports": true,
+  "groupRules": ["^react(-dom)?$", "^@angular/", "^vue$", "^node:", {}, "^[@]", "^[.]"],
+  "hasSemicolon": true,
+  "ignoreESLintRules": [],
+  "insertFinalNewline": true,
+  "keepUnused": [],
+  "maxLineLength": 120,
+  "quoteMark": "single",
+  "removeLastIndexInPath": true,
+  "removeLastSlashInPath": true,
+  "root": true,
+  "sortImportsBy": "paths",
+  "sortRules": {
+    "paths": ["_", "aA"],
+    "names": ["_", "aA"]
+  },
+  "tabSize": 2,
+  "tabType": "space",
+  "trailingComma": "none",
+  "wrappingStyle": "prettier"
+}

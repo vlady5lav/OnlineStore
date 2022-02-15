@@ -1,0 +1,17 @@
+.dockerignore
+.git
+.next
+.npm
+.vs
+.vscode
+.yarn
+*.esproj
+*.md
+bin
+build
+coverage
+node_modules
+nuget.config
+obj
+tmp
+web_modules

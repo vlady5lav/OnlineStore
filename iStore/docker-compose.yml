@@ -1,0 +1,124 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nginx
+    container_name: lde.nginx
+    volumes:
+      - ./Proxy/gateway/nginx/conf.d:/etc/nginx/conf.d
+      - ./Proxy/assets:/var/www/assets
+    environment:
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1
+      - NGINX_PORT=80
+    ports:
+      - "80:80"
+
+  postgres:
+    image: postgres
+    container_name: lde.postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: lde.pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    depends_on:
+      - postgres
+    ports:
+      - "8001:80"
+
+  redis:
+    image: redis
+    container_name: lde.redis
+    ports:
+      - "6380:6379"
+
+  identityserver:
+    container_name: lde.identityserver
+    build:
+      context: .
+      dockerfile: ./IdentityServer/IdentityServer/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5002
+      - SpaUrl=http://www.alevelwebsite.com
+      - CatalogApi=http://www.alevelwebsite.com:5000
+      - BasketApi=http://www.alevelwebsite.com:5003
+    ports:
+      - "5002:5002"
+
+  catalog.api:
+    container_name: lde.catalog.api
+    build:
+      context: .
+      dockerfile: ./Catalog/Catalog.Host/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - Authorization__Authority=http://www.alevelwebsite.com:5002
+      - ConnectionString=server=www.alevelwebsite.com;port=5433;database=catalog;uid=postgres;password=postgres;
+      - PathBase=http://www.alevelwebsite.com:5000
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+
+  basket.api:
+    container_name: lde.basket.api
+    build:
+      context: .
+      dockerfile: ./Basket/Basket.Host/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5003
+      - Authorization__Authority=http://www.alevelwebsite.com:5002
+      - Redis__Host=www.alevelwebsite.com:6380
+      - Redis__CacheTimeout=48:00:00
+      - PathBase=http://www.alevelwebsite.com:5003
+    depends_on:
+      - redis
+    ports:
+      - "5003:5003"
+
+  web.client:
+    container_name: lde.web.client
+    build:
+      context: ./Web/Web.Client
+      dockerfile: ./Dockerfile
+      target: development
+    volumes:
+      - ./Web/Web.Client/public:/app/public
+      - ./Web/Web.Client/src:/app/src
+    env_file:
+      - ./Web/Web.Client/.env
+    environment:
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1
+      - PORT=5001
+      - HTTPS=false
+      - PUBLIC_URL=http://www.alevelwebsite.com:5001/
+      - CHOKIDAR_USEPOLLING=true
+      - TSC_COMPILE_ON_ERROR=true
+      - ESLINT_NO_DEV_ERRORS=true
+      - REACT_APP_BASE_API_URL=http://www.alevelwebsite.com:5000/
+      - REACT_APP_CALLBACK_URL=http://www.alevelwebsite.com/
+      - REACT_APP_CATALOG_URL=http://www.alevelwebsite.com:5000/api/v1/catalogbff/
+      - REACT_APP_IDENTITY_URL=http://www.alevelwebsite.com:5002/
+      - REACT_APP_REDIRECT_URL=http://www.alevelwebsite.com/signin-oidc/
+    ports:
+      - "5001:5001"
+
+networks:
+  default:
+    driver: bridge
+    internal: false
+    attachable: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24
+          gateway: 192.168.0.1

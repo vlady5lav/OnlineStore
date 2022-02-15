@@ -1,0 +1,51 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import '~bootstrap/scss/bootstrap';
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.absoluteCentered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.avatar {
+  width: max-content;
+  height: max-content;
+  margin: 5px 5px 5px 5px;
+}
+
+.centered {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.inverted {
+  -webkit-filter: invert(1);
+  filter: invert(1);
+}
+
+.picture {
+  width: max-content;
+  height: max-content;
+  margin: 5px 5px 5px 5px;
+}

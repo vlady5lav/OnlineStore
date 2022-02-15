@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch React Client (YARN)",
+      "request": "launch",
+      "type": "pwa-node",
+      "console": "integratedTerminal",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start"],
+      "skipFiles": ["<node_internals>/**"],
+      "envFile": "${workspaceFolder}/.env",
+      "localRoot": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
