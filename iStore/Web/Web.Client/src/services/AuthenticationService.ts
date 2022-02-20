@@ -1,48 +1,95 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import 'reflect-metadata';
 
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
+import { Log, SigninRequest, UserManager } from 'oidc-client';
 
-import type { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from '../dtos';
-import { IoCTypes } from '../ioc';
-import type { HttpService } from './HttpService';
-import { ContentType, MethodType } from './HttpService';
-import type { LocalStorageService } from './LocalStorageService';
-import { KeyType } from './LocalStorageService';
+import { OidcConfig } from '../utils';
 
 export interface AuthenticationService {
-  signIn(request: SignInRequest): Promise<SignInResponse>;
-  signUp(request: SignUpRequest): Promise<SignUpResponse>;
-  signOut(): void;
+  createSigninRequest: () => {};
+  signinRedirect: () => void;
+  signinRedirectCallback: () => void;
+  signinSilentCallback: () => void;
+  isAuthenticated: () => {};
+  getUser: () => any;
+  signoutRedirect: () => void;
+  signoutRedirectCallback: () => void;
 }
 
 @injectable()
 export default class DefaultAuthenticationService implements AuthenticationService {
-  @inject(IoCTypes.httpService)
-  private readonly httpService!: HttpService;
+  private readonly _userManager;
 
-  @inject(IoCTypes.localStorageService)
-  private readonly localStorageService!: LocalStorageService;
-
-  public async signIn(request: SignInRequest): Promise<SignInResponse> {
-    const headers = { contentType: ContentType.Json };
-    const data = { ...request };
-    const result = await this.httpService.send<SignInResponse>('signin', MethodType.POST, headers, data);
-    this.localStorageService.setText(KeyType.Token, result.data.accessToken);
-    this.localStorageService.setJson(KeyType.User, result.data.user);
-    return result.data;
+  constructor() {
+    this._userManager = new UserManager(OidcConfig);
+    Log.logger = console;
+    Log.level = Log.DEBUG;
   }
 
-  public async signUp(request: SignUpRequest): Promise<SignUpResponse> {
-    const headers = { contentType: ContentType.Json };
-    const data = { ...request };
-    const result = await this.httpService.send<SignUpResponse>('signup', MethodType.POST, headers, data);
-    this.localStorageService.setText(KeyType.Token, result.data.accessToken);
-    this.localStorageService.setJson(KeyType.User, result.data.user);
-    return result.data;
-  }
+  createSigninRequest = (): Promise<SigninRequest> => {
+    return this._userManager.createSigninRequest();
+  };
 
-  public signOut(): void {
-    this.localStorageService.remove(KeyType.Token);
-    this.localStorageService.remove(KeyType.User);
-  }
+  signinRedirectCallback = async (): Promise<void> => {
+    await this._userManager.signinRedirectCallback().then(() => {
+      window.location.replace(localStorage.getItem('redirectUri') || '/');
+    });
+  };
+
+  getUser = async (): Promise<Oidc.User | null> => {
+    return await this._userManager.getUser();
+  };
+
+  parseJwt = (token: string): unknown => {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+  };
+
+  signinRedirect = async (): Promise<void> => {
+    localStorage.setItem('redirectUri', window.location.pathname);
+    await this._userManager.signinRedirect();
+  };
+
+  isAuthenticated = (): boolean => {
+    const oidcUser = JSON.parse(
+      String(
+        sessionStorage.getItem(`oidc.user:${process.env.REACT_APP_IDENTITY_URL}:${process.env.REACT_APP_CLIENT_ID}`)
+      )
+    );
+
+    return !!oidcUser && !!oidcUser.id_token;
+  };
+
+  signinSilent = (): void => {
+    this._userManager
+      .signinSilent()
+      .then((user) => {
+        console.log('Signed in', user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  signinSilentCallback = async (): Promise<void> => {
+    await this._userManager.signinSilentCallback();
+  };
+
+  signoutRedirect = async (): Promise<void> => {
+    await this._userManager.signoutRedirect({
+      id_token_hint: localStorage.getItem('id_token'),
+    });
+    await this._userManager.clearStaleState();
+  };
+
+  signoutRedirectCallback = async (): Promise<void> => {
+    await this._userManager.signoutRedirectCallback().then(async () => {
+      localStorage.clear();
+      await this._userManager.clearStaleState();
+      window.location.replace('/');
+    });
+  };
 }

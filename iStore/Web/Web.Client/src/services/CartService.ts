@@ -1,24 +1,26 @@
 import { inject, injectable } from 'inversify';
+import { HttpService } from 'services';
 
 import { IoCTypes } from '../ioc';
-import { Cart } from '../models';
-import LocalStorageService, { KeyType } from './LocalStorageService';
+import { ApiResponse, MethodType } from './HttpService';
 
 export interface CartService {
-  getCarts(): Cart[];
-  setCarts(cart: Cart[]): void;
+  getCart(): Promise<unknown>;
+  updateCart(data: string): void;
 }
 
 @injectable()
 export default class DefaultCartService implements CartService {
-  @inject(IoCTypes.localStorageService)
-  private readonly localStorageService!: LocalStorageService;
+  @inject(IoCTypes.httpService)
+  private readonly httpService!: HttpService;
 
-  public getCarts(): Cart[] {
-    return this.localStorageService.getJson<Cart[]>(KeyType.Carts) ?? [];
+  private readonly basketUrl = `${process.env.REACT_APP_BASKET_URL}`;
+
+  public async getCart(): Promise<ApiResponse<unknown>> {
+    return await this.httpService.sendAsync<unknown>(`${this.basketUrl}/get`, MethodType.POST);
   }
 
-  public setCarts(cart: Cart[]): void {
-    this.localStorageService.setJson<Cart[]>(KeyType.Carts, cart);
+  public async updateCart(data: string): Promise<void> {
+    await this.httpService.sendAsync<unknown>(`${this.basketUrl}/update`, MethodType.POST, undefined, data);
   }
 }

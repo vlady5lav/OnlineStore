@@ -1,11 +1,21 @@
-# https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-COPY . /src
-WORKDIR /src/IdentityServer/IdentityServer
-RUN dotnet publish -c Release -o /app
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-# final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
 WORKDIR /app
-COPY --from=build /app ./
+EXPOSE 5002
+
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY ["IdentityServer/IdentityServer/IdentityServer.csproj", "IdentityServer/IdentityServer/"]
+RUN dotnet restore "IdentityServer/IdentityServer/IdentityServer.csproj"
+COPY . .
+WORKDIR "/src/IdentityServer/IdentityServer"
+RUN dotnet build "IdentityServer.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "IdentityServer.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "IdentityServer.dll"]

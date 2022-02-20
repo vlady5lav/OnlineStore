@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nginx
+    container_name: lde.nginx
+
+  postgres:
+    image: postgres
+    container_name: lde.postgres
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: lde.pgadmin4
+
+  redis:
+    image: redis
+    container_name: lde.redis
+
+  identityserver:
+    container_name: lde.identityserver
+    build:
+      context: ../../
+      dockerfile: ./IdentityServer/IdentityServer/Dockerfile
+
+  catalog.api:
+    container_name: lde.catalog.api
+    build:
+      context: ../../
+      dockerfile: ./Catalog/Catalog.Host/Dockerfile
+
+  basket.api:
+    container_name: lde.basket.api
+    build:
+      context: ../../
+      dockerfile: ./Basket/Basket.Host/Dockerfile
+
+networks:
+  default:
+    driver: bridge
+    internal: false
+    attachable: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24
+          gateway: 192.168.0.1

@@ -18,7 +18,7 @@ export default class DefaultProductsService implements ProductsService {
   private readonly httpService!: HttpService;
 
   public async getById(id: number): Promise<Product> {
-    const result = await this.httpService.send<ProductDto>(
+    const result = await this.httpService.sendAsync<ProductDto>(
       `api/v1/CatalogBff/GetCatalogItemById?id=${id}`,
       MethodType.POST
     );
@@ -26,7 +26,7 @@ export default class DefaultProductsService implements ProductsService {
   }
 
   public async getItems(request: PaginatedItemsRequest): Promise<PaginatedItemsResponse> {
-    const result = await this.httpService.send<PaginatedItemsDto>(
+    const result = await this.httpService.sendAsync<PaginatedItemsDto>(
       'api/v1/CatalogBff/GetCatalogItems/',
       MethodType.POST,
       { contentType: ContentType.Json },

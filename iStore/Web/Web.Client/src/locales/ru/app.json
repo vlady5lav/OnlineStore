@@ -1,7 +1,7 @@
 {
-  "title": "App",
-  "loading": "Loading",
+  "title": "Приложение",
+  "loading": "Загрузка ...",
   "error": {
-    "unknown": "Unknown error!"
+    "unknown": "Неизвестная ошибка!"
   }
 }

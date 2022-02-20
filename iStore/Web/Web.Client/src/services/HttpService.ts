@@ -1,13 +1,15 @@
-import 'reflect-metadata';
-
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import i18n from 'i18next';
+
+import 'reflect-metadata';
+
+import { t } from 'i18next';
 import { injectable } from 'inversify';
 
 export interface HttpService {
-  send<T>(url: string, methodType: MethodType, headers?: ApiHeader, data?: any): Promise<ApiResponse<T>>;
+  sendAsync<T>(url: string, methodType: MethodType, headers?: ApiHeader, data?: any): Promise<ApiResponse<T>>;
 }
 
 const baseUrl = `${process.env.REACT_APP_BASE_API_URL}`;
@@ -59,7 +61,12 @@ export default class DefaultHttpService implements HttpService {
 
   private readonly headerValueCredentialsTypeOmit = 'omit';
 
-  public async send<T>(url: string, methodType: MethodType, headers?: ApiHeader, data?: any): Promise<ApiResponse<T>> {
+  public async sendAsync<T>(
+    url: string,
+    methodType: MethodType,
+    headers?: ApiHeader,
+    data?: any
+  ): Promise<ApiResponse<T>> {
     const headersRequest = this.getHeaders(headers);
     const bodyRequest = this.getBody(data, headers);
     const method = this.getMethod(methodType);
@@ -70,14 +77,14 @@ export default class DefaultHttpService implements HttpService {
       headers: headersRequest,
       body: bodyRequest,
     };
-    const response = await fetch(`${baseUrl}${url}`, requestOptions);
+    const response = await fetch(`${baseUrl}/${url}`, requestOptions);
     return this.handleResponse(response);
   }
 
   private async handleResponse<T>(response: Response): Promise<ApiResponse<T>> {
     if (!response.ok) {
       const message = await response.text();
-      throw new Error(message || i18n.t('app:error.unknown'));
+      throw new Error(message || t('app:error.unknown'));
     }
     const result: ApiResponse<T> = {
       ...response,

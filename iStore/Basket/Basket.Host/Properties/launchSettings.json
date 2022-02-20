@@ -3,13 +3,25 @@
   "profiles": {
     "Basket.Host": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://www.alevelwebsite.com:5003",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://www.alevelwebsite.com:5003",
+      "dotnetRunMessages": true
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "publishAllPorts": true,
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "http://+:5003",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "httpPort": 5003,
+      "useSSL": false
     }
   }
 }

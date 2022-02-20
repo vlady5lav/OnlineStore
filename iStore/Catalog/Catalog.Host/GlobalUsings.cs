@@ -12,8 +12,6 @@ global using Infrastructure.Identity;
 global using Infrastructure.Services;
 global using Infrastructure.Services.Interfaces;
 
-//global using Infrastructure.RateLimit.Extensions;
-
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;

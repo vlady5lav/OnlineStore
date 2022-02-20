@@ -3,12 +3,25 @@
   "profiles": {
     "IdentityServer": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5002",
+      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://www.alevelwebsite.com:5002",
+      "dotnetRunMessages": true
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true,
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "http://+:5002",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "httpPort": 5002,
+      "useSSL": false
     }
   }
 }

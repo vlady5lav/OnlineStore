@@ -52,7 +52,7 @@ const ProductCard = observer((properties: Properties) => {
   };
 
   const { id, name, price, availableStock, description, pictureUrl, catalogBrand, catalogType } = properties.product;
-  const count = cartStore.getItemCount(id);
+  const count = 0;
 
   return (
     <Card className="productCard" sx={{ width: 350, maxWidth: 350, padding: 1.5 }}>
@@ -92,31 +92,15 @@ const ProductCard = observer((properties: Properties) => {
       </CardContent>
       <CardActions sx={{ justifyContent: 'space-between', height: 50, maxHeight: 50, padding: 1.5 }}>
         {count <= 0 && (
-          <IconButton
-            onClick={() => {
-              cartStore.addItem(id);
-            }}
-          >
+          <IconButton onClick={() => {}}>
             <AddShoppingCartIcon />
           </IconButton>
         )}
         {count > 0 && (
           <ButtonGroup>
-            <Button
-              onClick={() => {
-                cartStore.removeItem(id);
-              }}
-            >
-              -
-            </Button>
+            <Button onClick={() => {}}>-</Button>
             <Button disabled>{count}</Button>
-            <Button
-              onClick={() => {
-                cartStore.addItem(id);
-              }}
-            >
-              +
-            </Button>
+            <Button onClick={() => {}}>+</Button>
           </ButtonGroup>
         )}
         <Button

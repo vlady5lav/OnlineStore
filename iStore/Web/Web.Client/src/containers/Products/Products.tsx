@@ -24,7 +24,7 @@ const Products = observer(() => {
     const getProducts = async () => {
       await store.getItems();
     };
-    getProducts();
+    void getProducts();
   }, [store, store.currentPage]);
 
   return (
@@ -51,13 +51,11 @@ const Products = observer(() => {
         <Pagination
           totalCount={store.totalPages}
           currentPage={store.currentPage}
-          onChange={(event: ChangeEvent<unknown>, value: number) => {
+          onChange={(event: ChangeEvent<unknown>, value: number): void => {
             store.changePage(value);
-            {
-              value !== 1
-                ? navigate(`/products?_page=${value}`, { replace: true })
-                : navigate('/products', { replace: true });
-            }
+            value !== 1
+              ? navigate(`/products?_page=${value}`, { replace: true })
+              : navigate('/products', { replace: true });
           }}
         />
       </Grid>

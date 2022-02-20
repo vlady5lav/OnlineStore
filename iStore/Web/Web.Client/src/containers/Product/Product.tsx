@@ -21,13 +21,13 @@ const Product = observer(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    const getProduct = async () => {
+    const getProduct = async (): Promise<void> => {
       const result = await store.getById(Number(id));
       if (result === undefined) {
         navigate('/products/', { replace: true });
       }
     };
-    getProduct();
+    void getProduct();
   }, [store, id, navigate]);
 
   return (

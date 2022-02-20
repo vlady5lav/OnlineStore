@@ -43,10 +43,11 @@ namespace IdentityServer
                     {
                         $"{configuration["SpaUrl"]}/signin-oidc",
                         $"{configuration["SpaUrl"]}/silentrenew",
-                        $"{configuration["SpaUrl"]}/logout/callback"
+                        $"{configuration["SpaUrl"]}/signout-oidc",
+                        $"{configuration["SpaUrl"]}/logout/callback",
                     },
 
-                    PostLogoutRedirectUris = { $"{configuration["SpaUrl"]}/signout-oidc" },
+                    PostLogoutRedirectUris = { $"{configuration["SpaUrl"]}/logout/callback" },
 
                     AllowedCorsOrigins = { $"{configuration["SpaUrl"]}" },
 
@@ -70,6 +71,8 @@ namespace IdentityServer
 
                     PostLogoutRedirectUris = { $"{configuration["CatalogApi"]}/swagger/" },
 
+                    AllowedCorsOrigins = { $"{configuration["CatalogApi"]}" },
+
                     AllowedScopes = { "spa", "catalog", "catalog.bff" },
                 },
                 new Client
@@ -84,6 +87,8 @@ namespace IdentityServer
                     RedirectUris = { $"{configuration["BasketApi"]}/swagger/oauth2-redirect.html" },
 
                     PostLogoutRedirectUris = { $"{configuration["BasketApi"]}/swagger/" },
+
+                    AllowedCorsOrigins = { $"{configuration["BasketApi"]}" },
 
                     AllowedScopes = { "spa", "basket", "basket.bff" },
                 },

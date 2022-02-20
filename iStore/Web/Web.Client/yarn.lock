@@ -3574,13 +3574,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:^1.53.0":
-  version: 1.53.0
-  resolution: "@tabler/icons@npm:1.53.0"
+"@tabler/icons@npm:^1.54.0":
+  version: 1.54.0
+  resolution: "@tabler/icons@npm:1.54.0"
   peerDependencies:
     react: ^16.x || 17.x
     react-dom: ^16.x || 17.x
-  checksum: 0c6a846a2e70adeb6588cc4acd7ef19455e781615608c9817c8367c9d60cbc390b83f60ac4a057ed143c8ac9fd185b0357aeb4d30393fea7b1e67d95997d064a
+  checksum: 5129525c9a26fc1dd6d8dd92ea0fd26a0d8291640b894c54157f041ee6ebc0c98f74a7f95d2feee0077820945715843981873739a0edae798ea4f1c5bf3432f0
   languageName: node
   linkType: hard
 
@@ -19924,7 +19924,7 @@ __metadata:
     "@rushstack/eslint-plugin-security": ^0.2.4
     "@svgr/core": ^6.2.1
     "@svgr/webpack": ^6.2.1
-    "@tabler/icons": ^1.53.0
+    "@tabler/icons": ^1.54.0
     "@testing-library/dom": ^8.11.3
     "@testing-library/jest-dom": ^5.16.2
     "@testing-library/react": ^12.1.3

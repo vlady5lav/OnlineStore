@@ -14,10 +14,14 @@
     <DisabledWarnings></DisabledWarnings>
     <NoWarn></NoWarn>
     <IsPackable>false</IsPackable>
+    <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="StackExchange.Redis" Version="2.2.88" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -28,7 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Infrastructure.RateLimit\Infrastructure.RateLimit.csproj" />
   </ItemGroup>
 
 </Project>

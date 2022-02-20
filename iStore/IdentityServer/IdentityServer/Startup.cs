@@ -16,15 +16,15 @@ namespace IdentityServer
 {
     public class Startup
     {
-        public IWebHostEnvironment Environment { get; }
-
-        public IConfiguration Configuration { get; }
-
         public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
             Environment = environment;
             Configuration = configuration;
         }
+
+        public IWebHostEnvironment Environment { get; }
+
+        public IConfiguration Configuration { get; }
 
         public void Configure(IApplicationBuilder app)
         {
@@ -34,14 +34,14 @@ namespace IdentityServer
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseIdentityServer();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Strict });
-
-            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
@@ -62,10 +62,10 @@ namespace IdentityServer
                 .AddPolicy(
                     "CorsPolicy",
                     builder => builder
-                    .WithOrigins($"{configuration["SpaUrl"]}")
                     .SetIsOriginAllowed((host) => true)
-                    .AllowAnyMethod()
+                    .WithOrigins($"{configuration["GeneralUrl"]}", $"{configuration["IdentityUrl"]}", $"{configuration["SpaUrl"]}", $"{configuration["CatalogApi"]}", $"{configuration["BasketApi"]}")
                     .AllowAnyHeader()
+                    .AllowAnyMethod()
                     .AllowCredentials()));
 
             var builder = services.AddIdentityServer(options =>

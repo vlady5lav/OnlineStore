@@ -78,8 +78,6 @@ builder.Services.AddCors(
             .AllowAnyHeader()
             .AllowCredentials()));
 
-//builder.Services.AddRateLimit(configuration);
-
 var app = builder.Build();
 
 app.UseSwagger()
@@ -96,8 +94,6 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.UseRateLimit();
 
 app.UseEndpoints(endpoints =>
 {

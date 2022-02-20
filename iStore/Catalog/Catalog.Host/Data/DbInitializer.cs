@@ -67,27 +67,28 @@ public static class DbInitializer
         {
             new CatalogType() { Type = "Computer Case" },             // 1
             new CatalogType() { Type = "Desk Mount" },                // 2
-            new CatalogType() { Type = "Graphics Card (GPU)" },       // 3
-            new CatalogType() { Type = "Hard-Disk Drive (HDD)" },     // 4
-            new CatalogType() { Type = "Headphones" },                // 5
-            new CatalogType() { Type = "Keyboard" },                  // 6
-            new CatalogType() { Type = "Laptop" },                    // 7
-            new CatalogType() { Type = "Memory (RAM)" },              // 8
-            new CatalogType() { Type = "Microphone" },                // 9
-            new CatalogType() { Type = "Monitor" },                   // 10
-            new CatalogType() { Type = "Motherboard" },               // 11
-            new CatalogType() { Type = "Mouse" },                     // 12
-            new CatalogType() { Type = "MousePad" },                  // 13
-            new CatalogType() { Type = "Processor (CPU)" },           // 14
-            new CatalogType() { Type = "Power Supply Unit (PSU)" },   // 15
-            new CatalogType() { Type = "Solid-State Drive (SSD)" },   // 16
-            new CatalogType() { Type = "SmartPhone" },                // 17
-            new CatalogType() { Type = "SmartWatch" },                // 18
-            new CatalogType() { Type = "Speakers" },                  // 19
-            new CatalogType() { Type = "Subwoofer" },                 // 20
-            new CatalogType() { Type = "Tablet" },                    // 21
-            new CatalogType() { Type = "Web Camera" },                // 22
-            new CatalogType() { Type = "Wrist Rest" },                // 23
+            new CatalogType() { Type = "Gamepad" },                   // 3
+            new CatalogType() { Type = "Graphics Card (GPU)" },       // 4
+            new CatalogType() { Type = "Hard-Disk Drive (HDD)" },     // 5
+            new CatalogType() { Type = "Headphones" },                // 6
+            new CatalogType() { Type = "Keyboard" },                  // 7
+            new CatalogType() { Type = "Laptop" },                    // 8
+            new CatalogType() { Type = "Memory (RAM)" },              // 9
+            new CatalogType() { Type = "Microphone" },                // 10
+            new CatalogType() { Type = "Monitor" },                   // 11
+            new CatalogType() { Type = "Motherboard" },               // 12
+            new CatalogType() { Type = "Mouse" },                     // 13
+            new CatalogType() { Type = "MousePad" },                  // 14
+            new CatalogType() { Type = "Processor (CPU)" },           // 15
+            new CatalogType() { Type = "Power Supply Unit (PSU)" },   // 16
+            new CatalogType() { Type = "Solid-State Drive (SSD)" },   // 17
+            new CatalogType() { Type = "SmartPhone" },                // 18
+            new CatalogType() { Type = "SmartWatch" },                // 19
+            new CatalogType() { Type = "Speakers" },                  // 20
+            new CatalogType() { Type = "Subwoofer" },                 // 21
+            new CatalogType() { Type = "Tablet" },                    // 22
+            new CatalogType() { Type = "Web Camera" },                // 23
+            new CatalogType() { Type = "Wrist Rest" },                // 24
         };
     }
 
@@ -98,7 +99,7 @@ public static class DbInitializer
             new CatalogItem
             {
                 CatalogBrandId = 14,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 5,
                 Description = "75% Layot 84 Keys Ultra-Slim Wireless Bluetooth/USB Wired " +
                 "Mechanical Keyboard with RGB LED Backlit, Low-Profile Keychron Optical " +
@@ -112,7 +113,7 @@ public static class DbInitializer
             new CatalogItem
             {
                 CatalogBrandId = 16,
-                CatalogTypeId = 12,
+                CatalogTypeId = 13,
                 AvailableStock = 3,
                 Description = "LIGHTSPEED wireless gaming mouse designed for serious performance with " +
                 "latest technology innovations. Impressive 250-hour battery life. Now in a variety of " +
@@ -125,19 +126,19 @@ public static class DbInitializer
             new CatalogItem
             {
                 CatalogBrandId = 7,
-                CatalogTypeId = 19,
+                CatalogTypeId = 20,
                 AvailableStock = 1,
                 Description = "BLUETOOTH 5.0 WITH QUALCOMM APTX HD. SUB OUT. NATURAL SOUND REPRODUCTION. " +
                 "UPDATED WIRELESS REMOTE. 2 YEAR WARRANTY.",
                 Name = "R1700BTs Active Bluetooth Bookshelf Speakers - 2.0 Wireless Near Field " +
                 "Studio Monitor Speaker - 66w RMS with Subwoofer Line Out",
                 Price = 4599.00M,
-                PictureFileName = "r1700bts.jpg",
+                PictureFileName = "r1700bts.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 16,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 2,
                 Description = "K360 is ready when you are. This compact wireless keyboard is ideal for " +
                 "narrower built and allows you to perform even in constricted workspaces. Equipped with " +
@@ -145,12 +146,12 @@ public static class DbInitializer
                 Name = "K360 Wireless USB Desktop Keyboard — Compact Full Keyboard, 3-Year " +
                 "Battery Life (Glossy Black)",
                 Price = 1399.00M,
-                PictureFileName = "k360.jpg",
+                PictureFileName = "k360.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 16,
-                CatalogTypeId = 12,
+                CatalogTypeId = 13,
                 AvailableStock = 4,
                 Description = "G502 SE HERO features an advanced optical sensor for maximum tracking " +
                 "accuracy, customizable RGB lighting, custom game profiles, from 200 up to 25,600 DPI, " +
@@ -158,12 +159,12 @@ public static class DbInitializer
                 Name = "G502 SE HERO High Performance RGB Gaming Mouse with 11 Programmable " +
                 "Buttons USB Black/White",
                 Price = 1699.00M,
-                PictureFileName = "g502sehero.jpg",
+                PictureFileName = "g502sehero.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 16,
-                CatalogTypeId = 7,
+                CatalogTypeId = 8,
                 AvailableStock = 4,
                 Description = "An advanced, precise mouse designed for creatives and engineered for coders, " +
                 "featuring a side wheel for extra comfort and a natural feel.",
@@ -175,7 +176,7 @@ public static class DbInitializer
             new CatalogItem
             {
                 CatalogBrandId = 16,
-                CatalogTypeId = 22,
+                CatalogTypeId = 23,
                 AvailableStock = 6,
                 Description = "The C270 HD Webcam gives you sharp, smooth conference calls (720p/30fps) in a " +
                 "widescreen format. Automatic light correction shows you in lifelike, natural colors.",
@@ -187,7 +188,7 @@ public static class DbInitializer
             new CatalogItem
             {
                 CatalogBrandId = 16,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 7,
                 Description = "Logitech’s most advanced typing experience yet. MX Keys combines crafted keys " +
                 "with smart illumination and a remarkably solid build.",
@@ -195,24 +196,24 @@ public static class DbInitializer
                 "Backlighting, Bluetooth, USB-C, Apple macOS, Microsoft Windows, Linux, iOS, Android, Metal " +
                 "Build - Graphite",
                 Price = 2999.00M,
-                PictureFileName = "mxkeys.jpg",
+                PictureFileName = "mxkeys.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 18,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 2,
                 Description = "Compact gaming keyboard featuring Razer Mechanical Switches, customizable lighting " +
                 "powered by Razer Chroma RGB, and aluminum construction for amazing gaming experience.",
                 Name = "BlackWidow V3 Tenkeyless TKL Mechanical Gaming Keyboard: Green Mechanical Switches " +
                 "- Tactile & Clicky - Chroma RGB Lighting - Compact Form Factor - Programmable Macros ",
                 Price = 2799.00M,
-                PictureFileName = "blackwidowv3tkl.jpg",
+                PictureFileName = "blackwidowv3tkl.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 14,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 5,
                 Description = "A fully customizable 75% layout mechanical keyboard packed with all premium " +
                 "features and unlimited possibilities.",
@@ -223,7 +224,7 @@ public static class DbInitializer
             new CatalogItem
             {
                 CatalogBrandId = 14,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 1,
                 Description = "The Q2 is a fully customizable mechanical keyboard with a compact layout that pushes your " +
                 "typing experience to the next level. With a 65% layout, full metal body, double-gasket design, the Q2 is " +
@@ -235,52 +236,52 @@ public static class DbInitializer
             new CatalogItem
             {
                 CatalogBrandId = 23,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 3,
                 Description = "Dye-sub on the top printing.",
                 Name = "VBM108V2 Crane of Lure Series Wired Mechanical Keyboard",
                 Price = 6800.00M,
-                PictureFileName = "vbm108v2craneoflure.png",
+                PictureFileName = "vbm108v2craneoflure.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 23,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 2,
                 Description = "Five-sides dye-sub printing.",
                 Name = "MA87 Lovebirds-You Series Wired Mechanical Keyboard",
                 Price = 6100.00M,
-                PictureFileName = "ma87lovebirdsyou.jpg",
+                PictureFileName = "ma87lovebirdsyou.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 23,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 4,
                 Description = "Dye-sub on the top printing.",
                 Name = "Miya68-C Summit Series Wired Mechanical Keyboard",
                 Price = 5900.00M,
-                PictureFileName = "miya68csummitecswitchv2.jpg",
+                PictureFileName = "miya68csummitecswitchv2.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 23,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 1,
                 Description = "Five-sides dye-sub printing.",
                 Name = "VA104S Phoenix Series Wired Mechanical Keyboard",
                 Price = 6300.00M,
-                PictureFileName = "va104sphoenix.jpg",
+                PictureFileName = "va104sphoenix.webp",
             },
             new CatalogItem
             {
                 CatalogBrandId = 23,
-                CatalogTypeId = 6,
+                CatalogTypeId = 7,
                 AvailableStock = 4,
                 Description = "Dye-sub on the top printing.",
                 Name = "MA87M V2 Summit R2 EC V2 Daisy Wired USB Mechanical Keyboard",
                 Price = 6000.00M,
-                PictureFileName = "ma87mv2summitr2ecv2daisy.jpg",
+                PictureFileName = "ma87mv2summitr2ecv2daisy.webp",
             },
         };
     }
