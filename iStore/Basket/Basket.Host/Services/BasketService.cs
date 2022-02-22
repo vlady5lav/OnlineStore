@@ -13,19 +13,19 @@ public class BasketService : IBasketService
         _cacheService = cacheService;
     }
 
-    public async Task Update(string userId, string data)
-    {
-        await _cacheService.AddOrUpdateAsync(userId, data);
-    }
-
-    public async Task<GetBasketResponse> Get(string userId)
+    public async Task<GetBasketResponse> GetAsync(string userId)
     {
         var result = await _cacheService.GetAsync<string>(userId);
         return new GetBasketResponse() { Data = result };
     }
 
-    public Task Remove(string userId)
+    public async Task UpdateAsync(string userId, string data)
     {
-        throw new NotImplementedException();
+        await _cacheService.AddOrUpdateAsync(userId, data);
+    }
+
+    public async Task DeleteAsync(string userId)
+    {
+        await _cacheService.DeleteAsync(userId);
     }
 }

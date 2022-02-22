@@ -22,26 +22,38 @@ public class BasketBffController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType((int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.TooManyRequests)]
-    public async Task<IActionResult> Update(UpdateBasketRequest data)
-    {
-        var basketId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
-
-        await _basketService.Update(basketId!, data.Data);
-
-        return Ok();
-    }
-
-    [HttpPost]
     [ProducesResponseType(typeof(GetBasketResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.TooManyRequests)]
     public async Task<IActionResult> Get()
     {
         var basketId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
 
-        var response = await _basketService.Get(basketId!);
+        var response = await _basketService.GetAsync(basketId!);
 
         return Ok(response);
+    }
+
+    [HttpPost]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.TooManyRequests)]
+    public async Task<IActionResult> Update(UpdateBasketRequest data)
+    {
+        var userId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+
+        await _basketService.UpdateAsync(userId!, data.Data);
+
+        return Ok();
+    }
+
+    [HttpPost]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.TooManyRequests)]
+    public async Task<IActionResult> Delete()
+    {
+        var basketId = User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+
+        await _basketService.DeleteAsync(basketId!);
+
+        return Ok();
     }
 }

@@ -48,13 +48,23 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "warn",
     "@typescript-eslint/explicit-module-boundary-types": "warn",
-    "@typescript-eslint/lines-between-class-members": "warn",
+    "@typescript-eslint/lines-between-class-members": [
+      "warn",
+      "always",
+      {
+        "exceptAfterOverload": true,
+        "exceptAfterSingleLine": true
+      }
+    ],
     "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-floating-promises": "warn",
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unused-expressions": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/require-await": "warn",
     "@typescript-eslint/restrict-template-expressions": "off",
     "comma-dangle": [
@@ -89,6 +99,7 @@
     "jsx-a11y/alt-text": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "linebreak-style": ["warn", "unix"],
+    "lines-between-class-members": "off",
     "max-len": [
       "off",
       {
@@ -106,6 +117,7 @@
     ],
     "no-alert": "off",
     "no-console": "off",
+    "no-empty": "warn",
     "no-extra-boolean-cast": "warn",
     "no-lone-blocks": "warn",
     "no-param-reassign": "off",
@@ -120,7 +132,16 @@
         "vars": "local"
       }
     ],
-    "no-use-before-define": "off",
+    "no-use-before-define": "warn",
+    "padded-blocks": [
+      "off",
+      {
+        "blocks": "always",
+        "classes": "always",
+        "switches": "always"
+      }
+    ],
+    "padding-line-between-statements": ["warn", { "blankLine": "always", "prev": "block-like", "next": "return" }],
     "prefer-const": "warn",
     "prefer-destructuring": "off",
     "prettier/prettier": [
@@ -152,7 +173,7 @@
     "quotes": ["warn", "single"],
     "react/button-has-type": "warn",
     "react/destructuring-assignment": "off",
-    "react/display-name": "off",
+    "react/display-name": "warn",
     "react/forbid-prop-types": "off",
     "react/jsx-curly-spacing": ["warn", "never"],
     "react/jsx-filename-extension": [
@@ -174,12 +195,12 @@
         "maximum": 1
       }
     ],
-    "react/no-array-index-key": "off",
+    "react/no-array-index-key": "warn",
     "react/no-children-prop": "off",
     "react/no-unescaped-entities": "off",
     "react/no-unused-prop-types": "warn",
     "react/prop-types": "warn",
-    "react/react-in-jsx-scope": "off",
+    "react/react-in-jsx-scope": "warn",
     "react/require-default-props": "off",
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "warn",
@@ -200,7 +221,7 @@
     "unicorn/filename-case": "off",
     "unicorn/new-for-builtins": "warn",
     "unicorn/no-array-for-each": "warn",
-    "unicorn/no-null": "off",
+    "unicorn/no-null": "warn",
     "unicorn/no-useless-undefined": "warn",
     "unicorn/numeric-separators-style": "warn",
     "unicorn/prefer-export-from": "warn",

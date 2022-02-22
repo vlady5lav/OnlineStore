@@ -46,8 +46,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5002
-      - SpaUrl=http://www.alevelwebsite.com
+      - GlobalUrl=http://www.alevelwebsite.com
       - CatalogApi=http://www.alevelwebsite.com:5000
+      - SpaUrl=http://www.alevelwebsite.com:5001
+      - IdentityUrl=http://www.alevelwebsite.com:5002
       - BasketApi=http://www.alevelwebsite.com:5003
     ports:
       - "5002:5002"
@@ -84,33 +86,6 @@ services:
       - redis
     ports:
       - "5003:5003"
-
-  web.client:
-    container_name: lde.web.client
-    build:
-      context: ./Web/Web.Client
-      dockerfile: ./Dockerfile
-      target: development
-    volumes:
-      - ./Web/Web.Client/public:/app/public
-      - ./Web/Web.Client/src:/app/src
-    env_file:
-      - ./Web/Web.Client/.env
-    environment:
-      - COMPOSE_CONVERT_WINDOWS_PATHS=1
-      - PORT=5001
-      - HTTPS=false
-      - PUBLIC_URL=http://www.alevelwebsite.com:5001/
-      - CHOKIDAR_USEPOLLING=true
-      - TSC_COMPILE_ON_ERROR=true
-      - ESLINT_NO_DEV_ERRORS=true
-      - REACT_APP_BASE_API_URL=http://www.alevelwebsite.com:5000/
-      - REACT_APP_CALLBACK_URL=http://www.alevelwebsite.com/
-      - REACT_APP_CATALOG_URL=http://www.alevelwebsite.com:5000/api/v1/catalogbff/
-      - REACT_APP_IDENTITY_URL=http://www.alevelwebsite.com:5002/
-      - REACT_APP_REDIRECT_URL=http://www.alevelwebsite.com/signin-oidc/
-    ports:
-      - "5001:5001"
 
 networks:
   default:

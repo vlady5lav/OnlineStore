@@ -1,4 +1,6 @@
-import { OidcAddress } from '.';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Address } from '.';
 
 export interface User {
   iss: string;
@@ -61,7 +63,7 @@ export interface User {
   /** True if the End-User's phone number has been verified; otherwise false. */
   phone_number_verified?: boolean;
   /** object 	End-User's preferred address in JSON [RFC4627] */
-  address?: OidcAddress;
+  address?: Address;
   /** Time the End-User's information was last updated. */
   updated_at?: number;
 }

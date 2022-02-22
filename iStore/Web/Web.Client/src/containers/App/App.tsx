@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import './App.css';
 import '../../locales/config';
 
 import React, { useEffect } from 'react';
@@ -15,14 +14,18 @@ const App = observer(() => {
   const cartStore = useInjection<CartStore>(IoCTypes.cartStore);
 
   useEffect(() => {
-    const getUser = async () => {
+    const getAuthenticationStatus = async (): Promise<void> => {
       await authStore.getUser();
-      if (authStore.user) {
-        console.log(authStore.user);
-      }
     };
-    void getUser();
-  }, [authStore, authStore.user, cartStore]);
+    getAuthenticationStatus().catch((error) => console.log(error));
+  }, [authStore]);
+
+  useEffect(() => {
+    const getCart = async (): Promise<void> => {
+      await cartStore.getCart();
+    };
+    getCart().catch((error) => console.log(error));
+  }, [cartStore]);
 
   return (
     <>

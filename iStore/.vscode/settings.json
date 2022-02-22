@@ -93,7 +93,7 @@
   },
   "tsImportSorter.configuration.tabSize": 2,
   "tsImportSorter.configuration.tabType": "space",
-  "tsImportSorter.configuration.trailingComma": "none",
+  "tsImportSorter.configuration.trailingComma": "multiLine",
   "tsImportSorter.configuration.wrappingStyle": "prettier",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "Web/Web.Client/.yarn/sdks/typescript/lib",

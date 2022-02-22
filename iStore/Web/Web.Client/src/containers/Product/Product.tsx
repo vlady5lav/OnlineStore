@@ -27,7 +27,7 @@ const Product = observer(() => {
         navigate('/products/', { replace: true });
       }
     };
-    void getProduct();
+    getProduct().catch((error) => console.log(error));
   }, [store, id, navigate]);
 
   return (

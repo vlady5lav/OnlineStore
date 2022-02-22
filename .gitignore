@@ -77,10 +77,13 @@ web_modules/
 
 # dotenv environment variable files
 #.env
+#.env.development
 #.env.development.local
-#.env.test.local
-#.env.production.local
 #.env.local
+#.env.production
+#.env.production.local
+#.env.test
+#.env.test.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -125,11 +128,14 @@ out
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# yarn v2
+# Yarn v3 files
 **/.yarn/cache/
 **/.yarn/unplugged/
 **/.yarn/build-state.yml
 **/.yarn/install-state.gz
+!**/.yarn/plugins/
+!**/.yarn/releases/
+!**/.yarn/sdks/
 .pnp.*
 
 ### VisualStudio.gitignore
@@ -701,7 +707,7 @@ $RECYCLE.BIN/
 ### Other
 
 # Config files
-#[Pp]roperties
-#[Ll]aunch[Ss]ettings.[Jj]son
-#[Ss]ettings.[Rr]ule[Ss]et
-#.[Ee]ditor[Cc]onfig
+!**/[Pp]roperties/
+!**/[Ll]aunch[Ss]ettings.[Jj]son
+!**/[Ss]ettings.[Rr]ule[Ss]et
+!**/.[Ee]ditor[Cc]onfig

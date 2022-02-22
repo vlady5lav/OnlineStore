@@ -24,6 +24,7 @@ IoCContainer.bind<CartService>(IoCTypes.cartService).to(DefaultCartService).inSi
 IoCContainer.bind<ProductsService>(IoCTypes.productsService).to(DefaultProductsService).inSingletonScope();
 
 IoCContainer.bind<AuthStore>(IoCTypes.authStore).to(AuthStore).inSingletonScope();
+
 IoCContainer.bind<CartStore>(IoCTypes.cartStore).to(CartStore).inSingletonScope();
 
 IoCContainer.bind<ProductsStore>(IoCTypes.productsStore).to(ProductsStore).inTransientScope();

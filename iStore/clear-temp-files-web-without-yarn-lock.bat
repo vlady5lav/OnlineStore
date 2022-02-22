@@ -1,6 +1,7 @@
 del /f /q "Web\Web.Client\.pnp.cjs"
 del /f /q "Web\Web.Client\.pnp.loader.mjs"
 del /f /q "Web\Web.Client\.yarn\install-state.gz"
+del /f /q "Web\Web.Client\Web.Client.esproj.user"
 rd /s /q "Web\Web.Client\.yarn\cache"
 rd /s /q "Web\Web.Client\.yarn\unplugged"
 rd /s /q "Web\Web.Client\bin"

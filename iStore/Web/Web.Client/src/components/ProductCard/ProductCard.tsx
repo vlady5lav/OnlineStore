@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable unicorn/no-null */
 
 import 'reflect-metadata';
 import '../../locales/config';
@@ -24,21 +23,22 @@ import {
   CardMedia,
   Collapse,
   IconButton,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
 
 import { IoCTypes, useInjection } from '../../ioc';
 import { Product } from '../../models';
-import { CartStore, ProductsStore } from '../../stores';
+import { AuthStore, CartStore } from '../../stores';
 
 interface Properties {
-  product: Product | null;
+  product: Product | undefined;
 }
 
 const ProductCard = observer((properties: Properties) => {
   const navigate = useNavigate();
-  const store = useInjection<ProductsStore>(IoCTypes.productsStore);
+  const authStore = useInjection<AuthStore>(IoCTypes.authStore);
   const cartStore = useInjection<CartStore>(IoCTypes.cartStore);
   const { t } = useTranslation(['products']);
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -47,12 +47,12 @@ const ProductCard = observer((properties: Properties) => {
     return null;
   }
 
-  const handleExpandClick = () => {
+  const handleExpandClick = (): void => {
     setExpanded(!expanded);
   };
 
   const { id, name, price, availableStock, description, pictureUrl, catalogBrand, catalogType } = properties.product;
-  const count = 0;
+  const count = cartStore.getCount(properties.product);
 
   return (
     <Card className="productCard" sx={{ width: 350, maxWidth: 350, padding: 1.5 }}>
@@ -60,47 +60,80 @@ const ProductCard = observer((properties: Properties) => {
         sx={{ height: 200, maxHeight: 200, padding: 1.5, textAlign: 'justify' }}
         avatar={<Avatar className="avatar" src={`${process.env.PUBLIC_URL}/logo512.png`} />}
         action={
-          <IconButton className="goToProductButton" onClick={() => navigate(`/products/${id}`, { replace: false })}>
+          <IconButton
+            className="goToProductButton"
+            onClick={(): void => navigate(`/products/${id}`, { replace: false })}
+          >
             <MoreVertIcon />
           </IconButton>
         }
         title={name}
         subheader={catalogBrand.brand}
       />
-      <CardContent
-        sx={{ display: 'grid', justifyContent: 'center', height: 205, maxHeight: 205, maxWidth: 350, padding: 1.5 }}
-      >
-        <CardMedia
-          component="img"
-          image={pictureUrl}
-          alt={`${catalogBrand.brand} ${name}`}
-          onClick={() => navigate(`/products/${id}`, { replace: false })}
-          sx={{ height: 200, maxWidth: 350, objectFit: 'contain' }}
-        />
+      <CardMedia
+        component="img"
+        image={pictureUrl}
+        alt={`${catalogBrand.brand} ${name}`}
+        onClick={(): void => navigate(`/products/${id}`, { replace: false })}
+        sx={{
+          display: 'grid',
+          justifyContent: 'center',
+          height: 200,
+          maxHeight: 200,
+          maxWidth: 350,
+          padding: 1.5,
+          border: 'dotted',
+          borderWidth: 1,
+        }}
+      />
+      <CardContent sx={{ padding: 0, margin: 1, textAlign: 'left' }}>
+        <Stack direction="row" justifyContent="space-between">
+          <Typography>{t('properties.brand')}:</Typography>
+          <Typography>{catalogBrand.brand}</Typography>
+        </Stack>
       </CardContent>
-      <CardContent sx={{ textAlign: 'left' }}>
-        <Typography>Brand: {catalogBrand.brand}</Typography>
+      <CardContent sx={{ padding: 0, margin: 1, textAlign: 'left' }}>
+        <Stack direction="row" justifyContent="space-between">
+          <Typography>{t('properties.type')}:</Typography>
+          <Typography>{catalogType.type}</Typography>
+        </Stack>
       </CardContent>
-      <CardContent sx={{ textAlign: 'left' }}>
-        <Typography>Type: {catalogType.type}</Typography>
-      </CardContent>
-      <CardContent sx={{ textAlign: 'left' }}>
-        <Typography>In Stock: {availableStock} pcs</Typography>
-      </CardContent>
-      <CardContent sx={{ textAlign: 'right' }}>
-        <Typography>{price} UAH</Typography>
+      <CardContent sx={{ padding: 0, margin: 1 }}>
+        <Stack direction="row" justifyContent="space-between">
+          <Typography>{t('properties.price')}:</Typography>
+          <Typography>
+            {price}
+            {t('properties.currency')}
+          </Typography>
+        </Stack>
       </CardContent>
       <CardActions sx={{ justifyContent: 'space-between', height: 50, maxHeight: 50, padding: 1.5 }}>
         {count <= 0 && (
-          <IconButton onClick={() => {}}>
+          <IconButton
+            onClick={async (): Promise<void> => {
+              await cartStore.addItem(properties.product!);
+            }}
+          >
             <AddShoppingCartIcon />
           </IconButton>
         )}
         {count > 0 && (
           <ButtonGroup>
-            <Button onClick={() => {}}>-</Button>
+            <Button
+              onClick={async (): Promise<void> => {
+                await cartStore.removeItem(properties.product!);
+              }}
+            >
+              -
+            </Button>
             <Button disabled>{count}</Button>
-            <Button onClick={() => {}}>+</Button>
+            <Button
+              onClick={async (): Promise<void> => {
+                await cartStore.addItem(properties.product!);
+              }}
+            >
+              +
+            </Button>
           </ButtonGroup>
         )}
         <Button

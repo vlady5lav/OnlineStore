@@ -6,5 +6,5 @@ public interface ICacheService
 
     Task<T> GetAsync<T>(string key);
 
-    Task RemoveAsync(string key);
+    Task DeleteAsync(string key);
 }

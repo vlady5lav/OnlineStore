@@ -14,31 +14,26 @@ export default class ProductsStore {
   private readonly productsService!: ProductsService;
 
   isLoading = false;
-
   products: Product[] = [];
-
-  product: Product | null = null;
-
+  product: Product | undefined = undefined;
   error = '';
-
   queryString = '';
-
   totalPages = 0;
-
   currentPage = 1;
-
-  pageLimit = 5;
+  pageLimit = 6;
 
   constructor() {
     const urlParameters = new URLSearchParams(window.location.search);
     const page = urlParameters.get('_page');
+    const limit = urlParameters.get('_limit');
     this.currentPage = Number(page);
+    this.pageLimit = Number(limit);
     makeAutoObservable(this);
   }
 
-  public init = () => {
+  public init = (): void => {
     this.error = '';
-    this.product = null;
+    this.product = undefined;
   };
 
   public getById = async (id: number): Promise<number | undefined> => {
@@ -54,14 +49,17 @@ export default class ProductsStore {
       }
     }
     this.isLoading = false;
+
     return this.product?.id;
   };
 
-  public getItems = async () => {
+  public getItems = async (): Promise<void> => {
     this.init();
     const urlParameters = new URLSearchParams(window.location.search);
     const page = urlParameters.get('_page');
+    const limit = urlParameters.get('_limit');
     this.currentPage = page ? Number(page) : Number(1);
+    this.pageLimit = limit ? Number(limit) : Number(6);
     try {
       this.isLoading = true;
       const result = await this.productsService.getItems({
@@ -81,7 +79,7 @@ export default class ProductsStore {
     this.isLoading = false;
   };
 
-  public search = async () => {
+  public search = async (): Promise<void> => {
     this.init();
     try {
       this.isLoading = true;
@@ -89,6 +87,7 @@ export default class ProductsStore {
       if (Number.isNaN(id)) {
         this.queryString = '';
         this.error = i18n.t('products:error.input');
+
         return;
       }
       const result = await this.productsService.getById(id);

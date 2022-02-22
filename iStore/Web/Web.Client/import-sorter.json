@@ -26,6 +26,6 @@
   },
   "tabSize": 2,
   "tabType": "space",
-  "trailingComma": "none",
+  "trailingComma": "multiLine",
   "wrappingStyle": "prettier"
 }

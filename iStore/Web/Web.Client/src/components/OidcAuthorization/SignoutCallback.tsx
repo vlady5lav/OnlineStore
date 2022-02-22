@@ -3,15 +3,15 @@ import React, { useEffect } from 'react';
 import { Box } from '@mui/material';
 
 import { IoCTypes, useInjection } from '../../ioc';
-import { AuthenticationService } from '../../services';
+import { AuthStore } from '../../stores';
 import { LoadingSpinner } from '../LoadingSpinner';
 
-export const SignoutCallback = () => {
-  const authenticationService = useInjection<AuthenticationService>(IoCTypes.authenticationService);
+export const SignoutCallback = (): JSX.Element => {
+  const authStore = useInjection<AuthStore>(IoCTypes.authStore);
 
   useEffect(() => {
-    void authenticationService.signoutRedirectCallback();
-  }, [authenticationService]);
+    authStore.signoutRedirectCallback();
+  }, [authStore]);
 
   return (
     <>

@@ -17,8 +17,8 @@ const ButtonSpinner = ({ isLoading, text, disabled, type, onClick, onChange, var
     <Button
       variant={variant ? variant : 'outlined'}
       disabled={!!disabled}
-      onClick={() => onClick()}
-      onChange={() => onChange()}
+      onClick={(): void => onClick()}
+      onChange={(): void => onChange()}
       type={type}
     >
       {isLoading ? <CircularProgress /> : `${text}`}

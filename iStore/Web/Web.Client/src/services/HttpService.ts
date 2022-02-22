@@ -1,18 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import 'reflect-metadata';
 
 import { t } from 'i18next';
 import { injectable } from 'inversify';
-
-export interface HttpService {
-  sendAsync<T>(url: string, methodType: MethodType, headers?: ApiHeader, data?: any): Promise<ApiResponse<T>>;
-}
-
-const baseUrl = `${process.env.REACT_APP_BASE_API_URL}`;
 
 export enum ContentType {
   FormData,
@@ -27,6 +19,11 @@ export enum MethodType {
   PUT,
 }
 
+export interface ApiHeader {
+  contentType?: ContentType;
+  authorization?: string | null;
+}
+
 export interface ApiResponse<T> {
   status: number;
   statusText: string;
@@ -34,35 +31,27 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-export interface ApiHeader {
-  contentType?: ContentType;
-  authorization?: string | null;
+export interface HttpService {
+  sendAsync<T>(route: string, methodType: MethodType, headers?: ApiHeader, data?: any): Promise<ApiResponse<T>>;
 }
+
+const baseUrl = `${process.env.REACT_APP_BASE_API_URL}`;
 
 @injectable()
 export default class DefaultHttpService implements HttpService {
   private readonly headerKeyContentType = 'Content-Type';
-
   private readonly headerValueContentTypeJson = 'application/json';
-
   private readonly headerValueContentTypeFormData = 'application/x-www-form-urlencoded';
-
   private readonly headerValueMethodTypeDelete = 'DELETE';
-
   private readonly headerValueMethodTypeGet = 'GET';
-
   private readonly headerValueMethodTypePatch = 'PATCH';
-
   private readonly headerValueMethodTypePost = 'POST';
-
   private readonly headerValueMethodTypePut = 'PUT';
-
   private readonly headerValueCredentialsTypeInclude = 'include';
-
   private readonly headerValueCredentialsTypeOmit = 'omit';
 
   public async sendAsync<T>(
-    url: string,
+    route: string,
     methodType: MethodType,
     headers?: ApiHeader,
     data?: any
@@ -77,7 +66,8 @@ export default class DefaultHttpService implements HttpService {
       headers: headersRequest,
       body: bodyRequest,
     };
-    const response = await fetch(`${baseUrl}/${url}`, requestOptions);
+    const response = await fetch(`${baseUrl}${route}`, requestOptions);
+
     return this.handleResponse(response);
   }
 
@@ -93,6 +83,7 @@ export default class DefaultHttpService implements HttpService {
       headers: response.headers,
       data: await response.json(),
     };
+
     return result;
   }
 
@@ -131,10 +122,11 @@ export default class DefaultHttpService implements HttpService {
         for (const key of Object.keys(data)) {
           parameters.append(key, data[key]);
         }
-        data.map;
+
         return parameters;
       }
     }
+
     return undefined;
   };
 
@@ -157,6 +149,7 @@ export default class DefaultHttpService implements HttpService {
         };
       }
     }
+
     return headersRequest;
   };
 }

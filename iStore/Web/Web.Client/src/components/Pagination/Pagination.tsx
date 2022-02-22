@@ -16,7 +16,7 @@ interface Properties {
 const Pagination = observer(({ totalCount, currentPage, onChange }: Properties) => {
   const [page, setPage] = React.useState(currentPage);
 
-  const handleChange = (event: ChangeEvent<unknown>, value: number) => {
+  const handleChange = (event: ChangeEvent<unknown>, value: number): void => {
     setPage(value);
     onChange(event, value);
   };

@@ -49,7 +49,7 @@ namespace IdentityServer
 
                     PostLogoutRedirectUris = { $"{configuration["SpaUrl"]}/logout/callback" },
 
-                    AllowedCorsOrigins = { $"{configuration["SpaUrl"]}" },
+                    AllowedCorsOrigins = { $"{configuration["SpaUrl"]}", $"{configuration["GlobalUrl"]}" },
 
                     RequirePkce = true,
                     RequireConsent = false,

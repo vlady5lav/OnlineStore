@@ -2,7 +2,7 @@ namespace IdentityServer
 {
     public class AppSettings
     {
-        public string GeneralUrl { get; set; }
+        public string GlobalUrl { get; set; }
 
         public string CatalogApi { get; set; }
 

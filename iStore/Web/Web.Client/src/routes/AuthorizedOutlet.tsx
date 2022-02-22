@@ -10,13 +10,14 @@ import { Box } from '@mui/material';
 
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { IoCTypes, useInjection } from '../ioc';
-import { AuthenticationService } from '../services';
+import { AuthStore } from '../stores';
 
 const AuthorizedOutlet = observer(() => {
-  const authenticationService = useInjection<AuthenticationService>(IoCTypes.authenticationService);
+  const authStore = useInjection<AuthStore>(IoCTypes.authStore);
 
-  if (!authenticationService.isAuthenticated()) {
-    void authenticationService.signinRedirect();
+  if (!authStore.user) {
+    authStore.signinRedirect();
+
     return (
       <>
         <Box className="absoluteCentered">
@@ -24,9 +25,9 @@ const AuthorizedOutlet = observer(() => {
         </Box>
       </>
     );
+  } else {
+    return <Outlet />;
   }
-
-  return <Outlet />;
 });
 
 export default AuthorizedOutlet;

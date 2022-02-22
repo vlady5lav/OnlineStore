@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-
 import 'reflect-metadata';
 import '../../locales/config';
 
@@ -10,7 +7,7 @@ import { Box } from '@mui/material';
 
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 
-const Signin = () => {
+const Signin = (): JSX.Element => {
   return (
     <>
       <Box className="absoluteCentered">

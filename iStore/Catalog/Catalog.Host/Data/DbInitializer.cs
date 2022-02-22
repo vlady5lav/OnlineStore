@@ -98,6 +98,30 @@ public static class DbInitializer
         {
             new CatalogItem
             {
+                CatalogBrandId = 7,
+                CatalogTypeId = 20,
+                AvailableStock = 1,
+                Description = "BLUETOOTH 5.0 WITH QUALCOMM APTX HD. SUB OUT. NATURAL SOUND REPRODUCTION. " +
+                "UPDATED WIRELESS REMOTE. 2 YEAR WARRANTY.",
+                Name = "R1700BTs Active Bluetooth Bookshelf Speakers - 2.0 Wireless Near Field " +
+                "Studio Monitor Speaker - 66w RMS with Subwoofer Line Out",
+                Price = 4599.00M,
+                PictureFileName = "r1700bts.webp",
+            },
+            new CatalogItem
+            {
+                CatalogBrandId = 16,
+                CatalogTypeId = 23,
+                AvailableStock = 6,
+                Description = "The C270 HD Webcam gives you sharp, smooth conference calls (720p/30fps) in a " +
+                "widescreen format. Automatic light correction shows you in lifelike, natural colors.",
+                Name = "C270 HD Webcam, HD 720p, Widescreen HD Video Calling, HD Light Correction, " +
+                "Noise-Reducing Mic, For Skype, FaceTime, Hangouts, WebEx, PC/Mac/Laptop/Macbook/Tablet - Black",
+                Price = 1299.00M,
+                PictureFileName = "c270hd.webp",
+            },
+            new CatalogItem
+            {
                 CatalogBrandId = 14,
                 CatalogTypeId = 7,
                 AvailableStock = 5,
@@ -112,28 +136,26 @@ public static class DbInitializer
             },
             new CatalogItem
             {
-                CatalogBrandId = 16,
-                CatalogTypeId = 13,
-                AvailableStock = 3,
-                Description = "LIGHTSPEED wireless gaming mouse designed for serious performance with " +
-                "latest technology innovations. Impressive 250-hour battery life. Now in a variety of " +
-                "vibrant colors.",
-                Name = "G305 LIGHTSPEED Wireless Gaming Mouse, Hero 12K Sensor, 12,000 DPI, " +
-                "Lightweight, 6 Programmable Buttons, 250h Battery Life, On-Board Memory, PC/Mac - Blue",
-                Price = 1899.00M,
-                PictureFileName = "g305lightspeedblue.webp",
+                CatalogBrandId = 14,
+                CatalogTypeId = 7,
+                AvailableStock = 5,
+                Description = "A fully customizable 75% layout mechanical keyboard packed with all premium " +
+                "features and unlimited possibilities.",
+                Name = "Q1 - QMK Custom Mechanical Keyboard - Fully Assembled - Wired USB - Gateron Phantom Brown - Navy Blue",
+                Price = 4700.00M,
+                PictureFileName = "q1qmk.webp",
             },
             new CatalogItem
             {
-                CatalogBrandId = 7,
-                CatalogTypeId = 20,
+                CatalogBrandId = 14,
+                CatalogTypeId = 7,
                 AvailableStock = 1,
-                Description = "BLUETOOTH 5.0 WITH QUALCOMM APTX HD. SUB OUT. NATURAL SOUND REPRODUCTION. " +
-                "UPDATED WIRELESS REMOTE. 2 YEAR WARRANTY.",
-                Name = "R1700BTs Active Bluetooth Bookshelf Speakers - 2.0 Wireless Near Field " +
-                "Studio Monitor Speaker - 66w RMS with Subwoofer Line Out",
-                Price = 4599.00M,
-                PictureFileName = "r1700bts.webp",
+                Description = "The Q2 is a fully customizable mechanical keyboard with a compact layout that pushes your " +
+                "typing experience to the next level. With a 65% layout, full metal body, double-gasket design, the Q2 is " +
+                "designed for a personalized experience and premium typing comfort.",
+                Name = "Q2 - QMK Custom Mechanical Keyboard - Fully Assembled - Wired USB - Gateron G Pro Brown - Carbon Black",
+                Price = 4800.00M,
+                PictureFileName = "q2qmk.webp",
             },
             new CatalogItem
             {
@@ -147,43 +169,6 @@ public static class DbInitializer
                 "Battery Life (Glossy Black)",
                 Price = 1399.00M,
                 PictureFileName = "k360.webp",
-            },
-            new CatalogItem
-            {
-                CatalogBrandId = 16,
-                CatalogTypeId = 13,
-                AvailableStock = 4,
-                Description = "G502 SE HERO features an advanced optical sensor for maximum tracking " +
-                "accuracy, customizable RGB lighting, custom game profiles, from 200 up to 25,600 DPI, " +
-                "and repositionable weights.",
-                Name = "G502 SE HERO High Performance RGB Gaming Mouse with 11 Programmable " +
-                "Buttons USB Black/White",
-                Price = 1699.00M,
-                PictureFileName = "g502sehero.webp",
-            },
-            new CatalogItem
-            {
-                CatalogBrandId = 16,
-                CatalogTypeId = 8,
-                AvailableStock = 4,
-                Description = "An advanced, precise mouse designed for creatives and engineered for coders, " +
-                "featuring a side wheel for extra comfort and a natural feel.",
-                Name = "MX Master 3 Advanced Wireless Mouse, Ultrafast Scrolling, Ergonomic, 4000 DPI, " +
-                "Customization, USB-C, Bluetooth, USB, Apple Mac, Microsoft PC Windows, Linux, iPad - Graphite",
-                Price = 2899.00M,
-                PictureFileName = "mxmaster3.webp",
-            },
-            new CatalogItem
-            {
-                CatalogBrandId = 16,
-                CatalogTypeId = 23,
-                AvailableStock = 6,
-                Description = "The C270 HD Webcam gives you sharp, smooth conference calls (720p/30fps) in a " +
-                "widescreen format. Automatic light correction shows you in lifelike, natural colors.",
-                Name = "C270 HD Webcam, HD 720p, Widescreen HD Video Calling, HD Light Correction, " +
-                "Noise-Reducing Mic, For Skype, FaceTime, Hangouts, WebEx, PC/Mac/Laptop/Macbook/Tablet - Black",
-                Price = 1299.00M,
-                PictureFileName = "c270hd.webp",
             },
             new CatalogItem
             {
@@ -212,36 +197,13 @@ public static class DbInitializer
             },
             new CatalogItem
             {
-                CatalogBrandId = 14,
-                CatalogTypeId = 7,
-                AvailableStock = 5,
-                Description = "A fully customizable 75% layout mechanical keyboard packed with all premium " +
-                "features and unlimited possibilities.",
-                Name = "Q1 - QMK Custom Mechanical Keyboard - Fully Assembled - Wired USB - Gateron Phantom Brown - Navy Blue",
-                Price = 4700.00M,
-                PictureFileName = "q1qmk.webp",
-            },
-            new CatalogItem
-            {
-                CatalogBrandId = 14,
-                CatalogTypeId = 7,
-                AvailableStock = 1,
-                Description = "The Q2 is a fully customizable mechanical keyboard with a compact layout that pushes your " +
-                "typing experience to the next level. With a 65% layout, full metal body, double-gasket design, the Q2 is " +
-                "designed for a personalized experience and premium typing comfort.",
-                Name = "Q2 - QMK Custom Mechanical Keyboard - Fully Assembled - Wired USB - Gateron G Pro Brown - Carbon Black",
-                Price = 4800.00M,
-                PictureFileName = "q2qmk.webp",
-            },
-            new CatalogItem
-            {
                 CatalogBrandId = 23,
                 CatalogTypeId = 7,
-                AvailableStock = 3,
+                AvailableStock = 4,
                 Description = "Dye-sub on the top printing.",
-                Name = "VBM108V2 Crane of Lure Series Wired Mechanical Keyboard",
-                Price = 6800.00M,
-                PictureFileName = "vbm108v2craneoflure.webp",
+                Name = "Miya68-C Summit Series Wired Mechanical Keyboard",
+                Price = 5900.00M,
+                PictureFileName = "miya68csummitecswitchv2.webp",
             },
             new CatalogItem
             {
@@ -259,9 +221,9 @@ public static class DbInitializer
                 CatalogTypeId = 7,
                 AvailableStock = 4,
                 Description = "Dye-sub on the top printing.",
-                Name = "Miya68-C Summit Series Wired Mechanical Keyboard",
-                Price = 5900.00M,
-                PictureFileName = "miya68csummitecswitchv2.webp",
+                Name = "MA87M V2 Summit R2 EC V2 Daisy Wired USB Mechanical Keyboard",
+                Price = 6000.00M,
+                PictureFileName = "ma87mv2summitr2ecv2daisy.webp",
             },
             new CatalogItem
             {
@@ -277,11 +239,49 @@ public static class DbInitializer
             {
                 CatalogBrandId = 23,
                 CatalogTypeId = 7,
-                AvailableStock = 4,
+                AvailableStock = 3,
                 Description = "Dye-sub on the top printing.",
-                Name = "MA87M V2 Summit R2 EC V2 Daisy Wired USB Mechanical Keyboard",
-                Price = 6000.00M,
-                PictureFileName = "ma87mv2summitr2ecv2daisy.webp",
+                Name = "VBM108V2 Crane of Lure Series Wired Mechanical Keyboard",
+                Price = 6800.00M,
+                PictureFileName = "vbm108v2craneoflure.webp",
+            },
+            new CatalogItem
+            {
+                CatalogBrandId = 16,
+                CatalogTypeId = 13,
+                AvailableStock = 3,
+                Description = "LIGHTSPEED wireless gaming mouse designed for serious performance with " +
+                "latest technology innovations. Impressive 250-hour battery life. Now in a variety of " +
+                "vibrant colors.",
+                Name = "G305 LIGHTSPEED Wireless Gaming Mouse, Hero 12K Sensor, 12,000 DPI, " +
+                "Lightweight, 6 Programmable Buttons, 250h Battery Life, On-Board Memory, PC/Mac - Blue",
+                Price = 1899.00M,
+                PictureFileName = "g305lightspeedblue.webp",
+            },
+            new CatalogItem
+            {
+                CatalogBrandId = 16,
+                CatalogTypeId = 13,
+                AvailableStock = 4,
+                Description = "G502 SE HERO features an advanced optical sensor for maximum tracking " +
+                "accuracy, customizable RGB lighting, custom game profiles, from 200 up to 25,600 DPI, " +
+                "and repositionable weights.",
+                Name = "G502 SE HERO High Performance RGB Gaming Mouse with 11 Programmable " +
+                "Buttons USB Black/White",
+                Price = 1699.00M,
+                PictureFileName = "g502sehero.webp",
+            },
+            new CatalogItem
+            {
+                CatalogBrandId = 16,
+                CatalogTypeId = 8,
+                AvailableStock = 4,
+                Description = "An advanced, precise mouse designed for creatives and engineered for coders, " +
+                "featuring a side wheel for extra comfort and a natural feel.",
+                Name = "MX Master 3 Advanced Wireless Mouse, Ultrafast Scrolling, Ergonomic, 4000 DPI, " +
+                "Customization, USB-C, Bluetooth, USB, Apple Mac, Microsoft PC Windows, Linux, iPad - Graphite",
+                Price = 2899.00M,
+                PictureFileName = "mxmaster3.webp",
             },
         };
     }

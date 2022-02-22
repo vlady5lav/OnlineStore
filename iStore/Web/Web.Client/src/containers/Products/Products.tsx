@@ -5,7 +5,7 @@ import React, { ChangeEvent, useEffect } from 'react';
 
 import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Box, Grid } from '@mui/material';
 
@@ -19,13 +19,14 @@ const Products = observer(() => {
   const store = useInjection<ProductsStore>(IoCTypes.productsStore);
   const { t } = useTranslation(['products']);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const getProducts = async () => {
+    const getProducts = async (): Promise<void> => {
       await store.getItems();
     };
-    void getProducts();
-  }, [store, store.currentPage]);
+    getProducts().catch((error) => console.log(error));
+  }, [store, store.currentPage, location]);
 
   return (
     <Grid container justifyContent="center">
@@ -39,8 +40,8 @@ const Products = observer(() => {
             <h1>{t('title')}</h1>
           </Grid>
           <Grid key={Math.random() * 12_345} container justifyContent="center" margin={2}>
-            {store.products?.map((product, key) => (
-              <Grid key={key} item margin={2}>
+            {store.products?.map((product) => (
+              <Grid key={Math.random() * 12_345} item margin={2}>
                 <ProductCard product={{ ...product }} />
               </Grid>
             ))}

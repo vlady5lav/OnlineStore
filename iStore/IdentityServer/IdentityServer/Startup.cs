@@ -63,7 +63,7 @@ namespace IdentityServer
                     "CorsPolicy",
                     builder => builder
                     .SetIsOriginAllowed((host) => true)
-                    .WithOrigins($"{configuration["GeneralUrl"]}", $"{configuration["IdentityUrl"]}", $"{configuration["SpaUrl"]}", $"{configuration["CatalogApi"]}", $"{configuration["BasketApi"]}")
+                    .WithOrigins($"{configuration["GlobalUrl"]}", $"{configuration["CatalogApi"]}", $"{configuration["SpaUrl"]}", $"{configuration["IdentityUrl"]}", $"{configuration["BasketApi"]}")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()));

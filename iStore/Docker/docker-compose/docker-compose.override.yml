@@ -34,8 +34,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5002
-      - SpaUrl=http://www.alevelwebsite.com
+      - GlobalUrl=http://www.alevelwebsite.com
       - CatalogApi=http://www.alevelwebsite.com:5000
+      - SpaUrl=http://www.alevelwebsite.com
+      - IdentityUrl=http://www.alevelwebsite.com:5002
       - BasketApi=http://www.alevelwebsite.com:5003
     ports:
       - "5002:5002"

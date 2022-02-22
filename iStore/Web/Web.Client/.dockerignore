@@ -28,6 +28,8 @@
 **/*.com.apple.timemachine.donotpresent*
 **/*.dbmdl
 **/*.dockerignore*
+**/*.*env*.*.*local*
+**/*.*env*.*local*
 **/*.editorconfig*
 **/*.eslintcache*
 **/*.fseventsd*

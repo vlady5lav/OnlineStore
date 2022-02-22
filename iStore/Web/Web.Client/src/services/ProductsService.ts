@@ -17,23 +17,27 @@ export default class DefaultProductsService implements ProductsService {
   @inject(IoCTypes.httpService)
   private readonly httpService!: HttpService;
 
+  private readonly catalogRoute = `${process.env.REACT_APP_CATALOG_CONTROLLER_ROUTE}`;
+
   public async getById(id: number): Promise<Product> {
     const result = await this.httpService.sendAsync<ProductDto>(
-      `api/v1/CatalogBff/GetCatalogItemById?id=${id}`,
+      `${this.catalogRoute}/getcatalogitembyid?id=${id}`,
       MethodType.POST
     );
+
     return result.data;
   }
 
   public async getItems(request: PaginatedItemsRequest): Promise<PaginatedItemsResponse> {
     const result = await this.httpService.sendAsync<PaginatedItemsDto>(
-      'api/v1/CatalogBff/GetCatalogItems/',
+      `${this.catalogRoute}/getcatalogitems/`,
       MethodType.POST,
       { contentType: ContentType.Json },
       request
     );
     const data = result.data.data;
     const total_pages = Math.ceil(Number(result.data.count) / Number(request.pageSize));
+
     return { data: data, total_pages: total_pages };
   }
 }

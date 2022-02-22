@@ -1,73 +1,62 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import 'reflect-metadata';
 
 import { injectable } from 'inversify';
-import { Log, SigninRequest, UserManager } from 'oidc-client';
+import { Log, SigninRequest, User, UserManager } from 'oidc-client';
 
 import { OidcConfig } from '../utils';
 
 export interface AuthenticationService {
-  createSigninRequest: () => {};
+  createSigninRequest: () => Promise<SigninRequest>;
+  getUser: () => Promise<User | undefined>;
+  parseJwt: (token: string) => unknown;
   signinRedirect: () => void;
   signinRedirectCallback: () => void;
+  signinSilent: () => void;
   signinSilentCallback: () => void;
-  isAuthenticated: () => {};
-  getUser: () => any;
   signoutRedirect: () => void;
   signoutRedirectCallback: () => void;
 }
 
 @injectable()
 export default class DefaultAuthenticationService implements AuthenticationService {
-  private readonly _userManager;
+  private readonly userManager: UserManager;
 
   constructor() {
-    this._userManager = new UserManager(OidcConfig);
+    this.userManager = new UserManager(OidcConfig);
     Log.logger = console;
-    Log.level = Log.DEBUG;
+    Log.level = Log.WARN;
   }
 
   createSigninRequest = (): Promise<SigninRequest> => {
-    return this._userManager.createSigninRequest();
+    return this.userManager.createSigninRequest();
   };
 
-  signinRedirectCallback = async (): Promise<void> => {
-    await this._userManager.signinRedirectCallback().then(() => {
-      window.location.replace(localStorage.getItem('redirectUri') || '/');
-    });
-  };
-
-  getUser = async (): Promise<Oidc.User | null> => {
-    return await this._userManager.getUser();
+  getUser = async (): Promise<User | undefined> => {
+    return (await this.userManager.getUser()) ?? undefined;
   };
 
   parseJwt = (token: string): unknown => {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace('-', '+').replace('_', '/');
+
     return JSON.parse(window.atob(base64));
   };
 
   signinRedirect = async (): Promise<void> => {
-    localStorage.setItem('redirectUri', window.location.pathname);
-    await this._userManager.signinRedirect();
+    await this.userManager.signinRedirect();
   };
 
-  isAuthenticated = (): boolean => {
-    const oidcUser = JSON.parse(
-      String(
-        sessionStorage.getItem(`oidc.user:${process.env.REACT_APP_IDENTITY_URL}:${process.env.REACT_APP_CLIENT_ID}`)
-      )
-    );
-
-    return !!oidcUser && !!oidcUser.id_token;
+  signinRedirectCallback = async (): Promise<void> => {
+    await this.userManager.signinRedirectCallback().then(() => {
+      window.location.replace(localStorage.getItem('redirectUri') || '/');
+    });
   };
 
   signinSilent = (): void => {
-    this._userManager
+    this.userManager
       .signinSilent()
       .then((user) => {
-        console.log('Signed in', user);
+        console.log(`User with ID: ${user.id_token} successfully silently signed in `);
       })
       .catch((error) => {
         console.log(error);
@@ -75,21 +64,21 @@ export default class DefaultAuthenticationService implements AuthenticationServi
   };
 
   signinSilentCallback = async (): Promise<void> => {
-    await this._userManager.signinSilentCallback();
+    await this.userManager.signinSilentCallback();
   };
 
   signoutRedirect = async (): Promise<void> => {
-    await this._userManager.signoutRedirect({
+    await this.userManager.signoutRedirect({
       id_token_hint: localStorage.getItem('id_token'),
     });
-    await this._userManager.clearStaleState();
+    await this.userManager.clearStaleState();
   };
 
   signoutRedirectCallback = async (): Promise<void> => {
-    await this._userManager.signoutRedirectCallback().then(async () => {
+    await this.userManager.signoutRedirectCallback().then(async (): Promise<void> => {
       localStorage.clear();
-      await this._userManager.clearStaleState();
-      window.location.replace('/');
+      await this.userManager.clearStaleState();
+      window.location.replace(localStorage.getItem('redirectUri') || '/');
     });
   };
 }

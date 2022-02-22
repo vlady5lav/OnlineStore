@@ -43,7 +43,7 @@ public class CacheService : ICacheService
             : default!;
     }
 
-    public async Task RemoveAsync(string key)
+    public async Task DeleteAsync(string key)
     {
         var redis = GetRedisDatabase();
 
