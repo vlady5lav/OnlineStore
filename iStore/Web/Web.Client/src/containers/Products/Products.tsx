@@ -25,6 +25,7 @@ const Products = observer(() => {
     const getProducts = async (): Promise<void> => {
       await store.getItems();
     };
+
     getProducts().catch((error) => console.log(error));
   }, [store, store.currentPage, location]);
 

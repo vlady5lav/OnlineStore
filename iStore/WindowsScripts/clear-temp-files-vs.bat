@@ -1,3 +1,4 @@
+cd ..
 del /f /q "Basket\Basket.Host\Basket.Host.csproj.user"
 del /f /q "Basket\Basket.UnitTests\Basket.UnitTests.csproj.user"
 del /f /q "Catalog\Catalog.Host\Catalog.Host.csproj.user"

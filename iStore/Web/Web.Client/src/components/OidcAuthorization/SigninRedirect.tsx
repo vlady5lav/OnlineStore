@@ -6,12 +6,16 @@ import { IoCTypes, useInjection } from '../../ioc';
 import { AuthStore } from '../../stores';
 import { LoadingSpinner } from '../LoadingSpinner';
 
-export const Signin = (): JSX.Element => {
+const SigninRedirect = (): JSX.Element => {
   const authStore = useInjection<AuthStore>(IoCTypes.authStore);
 
   useEffect(() => {
-    authStore.signinRedirect();
-  }, [authStore]);
+    const signinRedirect = async (): Promise<void> => {
+      await authStore.signinRedirect();
+    };
+
+    signinRedirect().catch((error) => console.log(error));
+  }, [authStore, authStore.user]);
 
   return (
     <>
@@ -22,4 +26,4 @@ export const Signin = (): JSX.Element => {
   );
 };
 
-export default Signin;
+export default SigninRedirect;

@@ -18,52 +18,70 @@ export default class AuthStore {
     makeAutoObservable(this);
   }
 
+  public getAuthenticationStatus = (): boolean => {
+    return this.authenticationService.getAuthenticationStatus();
+  };
+
   public getUser = async (): Promise<void> => {
     const userResponse = await this.authenticationService.getUser();
     this.setUser(userResponse);
   };
 
-  public saveCurrentLocation = (): void => {
-    localStorage.setItem('redirectUri', window.location.pathname);
+  public removeRedirectLocation = (): void => {
+    localStorage.removeItem('redirectUri');
+  };
+
+  public replaceLocation = (): void => {
+    window.location.replace(localStorage.getItem('redirectUri') || '/');
+  };
+
+  public saveLocation = (location?: string): void => {
+    if (location) {
+      localStorage.setItem('redirectUri', location);
+    } else if (window.location.pathname !== '/signin' && window.location.pathname !== '/signout') {
+      localStorage.setItem('redirectUri', window.location.pathname);
+    } else {
+      localStorage.setItem('redirectUri', '/');
+    }
   };
 
   public setUser = (user: User | undefined): void => {
     this.user = user;
   };
 
-  public signinRedirect = async (): Promise<void> => {
+  public signinRedirect = async (location?: string): Promise<void> => {
+    this.saveLocation(location);
+    this.authenticationService.stopSilentRenew();
+    await this.authenticationService.clearStaleState();
     await this.authenticationService.signinRedirect();
+    this.authenticationService.startSilentRenew();
   };
 
-  public signinRedirectCallback = (): void => {
-    this.authenticationService.signinRedirectCallback();
+  public signinRedirectCallback = async (): Promise<void> => {
+    await this.authenticationService.signinRedirectCallback();
+    this.replaceLocation();
+    this.removeRedirectLocation();
   };
 
-  public signinSilent = (): void => {
-    this.authenticationService.signinSilent();
+  public signinSilent = async (): Promise<void> => {
+    this.user = await this.authenticationService.signinSilent();
+    console.log(`User with ID: ${this.user?.profile.sub} successfully signed in silently!`);
   };
 
-  public signinSilentCallback = (): void => {
-    this.authenticationService.signinSilentCallback();
+  public signinSilentCallback = async (): Promise<void> => {
+    await this.authenticationService.signinSilentCallback();
   };
 
-  public signoutRedirect = (): void => {
-    this.authenticationService.signoutRedirect();
+  public signoutRedirect = async (location?: string): Promise<void> => {
+    this.saveLocation(location);
+    await this.authenticationService.signoutRedirect();
+    await this.authenticationService.clearStaleState();
   };
 
-  public signoutRedirectCallback = (): void => {
-    this.authenticationService.signoutRedirectCallback();
-  };
-
-  public getAuthenticationStatus = (): boolean => {
-    const oidcUser = JSON.parse(
-      String(
-        sessionStorage.getItem(
-          `oidc.user:${process.env.REACT_APP_AUTH_URL}:${process.env.REACT_APP_IDENTITY_CLIENT_ID}`
-        )
-      )
-    );
-
-    return !!oidcUser && !!oidcUser.id_token;
+  public signoutRedirectCallback = async (): Promise<void> => {
+    await this.authenticationService.signoutRedirectCallback();
+    localStorage.clear();
+    this.replaceLocation();
+    this.removeRedirectLocation();
   };
 }

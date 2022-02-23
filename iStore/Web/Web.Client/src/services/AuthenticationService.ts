@@ -1,20 +1,29 @@
 import 'reflect-metadata';
 
 import { injectable } from 'inversify';
-import { Log, SigninRequest, User, UserManager } from 'oidc-client';
+import { Log, SigninRequest, SignoutRequest, SignoutResponse, User, UserManager } from 'oidc-client';
 
 import { OidcConfig } from '../utils';
 
 export interface AuthenticationService {
+  clearStaleState: () => Promise<void>;
   createSigninRequest: () => Promise<SigninRequest>;
+  createSignoutRequest: () => Promise<SignoutRequest>;
+  getAuthenticationStatus: () => boolean;
   getUser: () => Promise<User | undefined>;
   parseJwt: (token: string) => unknown;
-  signinRedirect: () => void;
-  signinRedirectCallback: () => void;
-  signinSilent: () => void;
-  signinSilentCallback: () => void;
-  signoutRedirect: () => void;
-  signoutRedirectCallback: () => void;
+  signinPopup: () => Promise<User | undefined>;
+  signinPopupCallback: () => Promise<User | undefined>;
+  signinRedirect: () => Promise<void>;
+  signinRedirectCallback: () => Promise<User | undefined>;
+  signinSilent: () => Promise<User | undefined>;
+  signinSilentCallback: () => Promise<User | undefined>;
+  signoutPopup: () => Promise<void>;
+  signoutPopupCallback: () => Promise<void>;
+  signoutRedirect: () => Promise<void>;
+  signoutRedirectCallback: () => Promise<SignoutResponse>;
+  startSilentRenew: () => void;
+  stopSilentRenew: () => void;
 }
 
 @injectable()
@@ -27,58 +36,100 @@ export default class DefaultAuthenticationService implements AuthenticationServi
     Log.level = Log.WARN;
   }
 
-  createSigninRequest = (): Promise<SigninRequest> => {
+  public clearStaleState = async (): Promise<void> => {
+    await this.userManager.clearStaleState().catch((error) => {
+      console.log(error);
+    });
+  };
+
+  public createSigninRequest = (): Promise<SigninRequest> => {
     return this.userManager.createSigninRequest();
   };
 
-  getUser = async (): Promise<User | undefined> => {
+  public createSignoutRequest = (): Promise<SignoutRequest> => {
+    return this.userManager.createSignoutRequest();
+  };
+
+  public getAuthenticationStatus = (): boolean => {
+    const oidcUser = JSON.parse(
+      String(
+        sessionStorage.getItem(
+          `oidc.user:${process.env.REACT_APP_AUTH_URL}:${process.env.REACT_APP_IDENTITY_CLIENT_ID}`
+        )
+      )
+    );
+
+    return !!oidcUser && !!oidcUser.id_token;
+  };
+
+  public getUser = async (): Promise<User | undefined> => {
     return (await this.userManager.getUser()) ?? undefined;
   };
 
-  parseJwt = (token: string): unknown => {
+  public parseJwt = (token: string): unknown => {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace('-', '+').replace('_', '/');
 
     return JSON.parse(window.atob(base64));
   };
 
-  signinRedirect = async (): Promise<void> => {
-    await this.userManager.signinRedirect();
+  public signinPopup = async (): Promise<User | undefined> => {
+    return (await this.userManager.signinPopup()) ?? undefined;
   };
 
-  signinRedirectCallback = async (): Promise<void> => {
-    await this.userManager.signinRedirectCallback().then(() => {
-      window.location.replace(localStorage.getItem('redirectUri') || '/');
+  public signinPopupCallback = async (): Promise<User | undefined> => {
+    return (await this.userManager.signinPopupCallback()) ?? undefined;
+  };
+
+  public signinRedirect = async (): Promise<void> => {
+    await this.userManager.signinRedirect().catch((error) => {
+      console.log(error);
     });
   };
 
-  signinSilent = (): void => {
-    this.userManager
-      .signinSilent()
-      .then((user) => {
-        console.log(`User with ID: ${user.id_token} successfully silently signed in `);
+  public signinRedirectCallback = async (): Promise<User | undefined> => {
+    return (await this.userManager.signinRedirectCallback()) ?? undefined;
+  };
+
+  public signinSilent = async (): Promise<User | undefined> => {
+    return (await this.userManager.signinSilent()) ?? undefined;
+  };
+
+  public signinSilentCallback = async (): Promise<User | undefined> => {
+    return (await this.userManager.signinSilentCallback()) ?? undefined;
+  };
+
+  public signoutPopup = async (): Promise<void> => {
+    await this.userManager.signoutPopup().catch((error) => {
+      console.log(error);
+    });
+  };
+
+  public signoutPopupCallback = async (): Promise<void> => {
+    await this.userManager.signoutPopupCallback().catch((error) => {
+      console.log(error);
+    });
+  };
+
+  public signoutRedirect = async (): Promise<void> => {
+    await this.userManager
+      .signoutRedirect({
+        id_token_hint: localStorage.getItem('id_token'),
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  signinSilentCallback = async (): Promise<void> => {
-    await this.userManager.signinSilentCallback();
+  public signoutRedirectCallback = async (): Promise<SignoutResponse> => {
+    return await this.userManager.signoutRedirectCallback();
   };
 
-  signoutRedirect = async (): Promise<void> => {
-    await this.userManager.signoutRedirect({
-      id_token_hint: localStorage.getItem('id_token'),
-    });
-    await this.userManager.clearStaleState();
+  public startSilentRenew = (): void => {
+    this.userManager.startSilentRenew();
   };
 
-  signoutRedirectCallback = async (): Promise<void> => {
-    await this.userManager.signoutRedirectCallback().then(async (): Promise<void> => {
-      localStorage.clear();
-      await this.userManager.clearStaleState();
-      window.location.replace(localStorage.getItem('redirectUri') || '/');
-    });
+  public stopSilentRenew = (): void => {
+    this.userManager.stopSilentRenew();
   };
 }

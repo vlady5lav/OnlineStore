@@ -6,11 +6,15 @@ import { IoCTypes, useInjection } from '../../ioc';
 import { AuthStore } from '../../stores';
 import { LoadingSpinner } from '../LoadingSpinner';
 
-export const SilentRenew = (): JSX.Element => {
+const SigninRedirectCallback = (): JSX.Element => {
   const authStore = useInjection<AuthStore>(IoCTypes.authStore);
 
   useEffect(() => {
-    authStore.signinSilentCallback();
+    const signinRedirectCallback = async (): Promise<void> => {
+      await authStore.signinRedirectCallback();
+    };
+
+    signinRedirectCallback().catch((error) => console.log(error));
   }, [authStore]);
 
   return (
@@ -22,4 +26,4 @@ export const SilentRenew = (): JSX.Element => {
   );
 };
 
-export default SilentRenew;
+export default SigninRedirectCallback;

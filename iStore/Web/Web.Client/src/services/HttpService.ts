@@ -76,6 +76,7 @@ export default class DefaultHttpService implements HttpService {
       const message = await response.text();
       throw new Error(message || t('app:error.unknown'));
     }
+
     const result: ApiResponse<T> = {
       ...response,
       status: response.status,
@@ -98,15 +99,19 @@ export default class DefaultHttpService implements HttpService {
       case MethodType.DELETE: {
         return this.headerValueMethodTypeDelete;
       }
+
       case MethodType.PATCH: {
         return this.headerValueMethodTypePatch;
       }
+
       case MethodType.POST: {
         return this.headerValueMethodTypePost;
       }
+
       case MethodType.PUT: {
         return this.headerValueMethodTypePut;
       }
+
       default: {
         return this.headerValueMethodTypeGet;
       }
@@ -119,6 +124,7 @@ export default class DefaultHttpService implements HttpService {
         return JSON.stringify(data);
       } else {
         const parameters = new URLSearchParams();
+
         for (const key of Object.keys(data)) {
           parameters.append(key, data[key]);
         }
@@ -132,6 +138,7 @@ export default class DefaultHttpService implements HttpService {
 
   private getHeaders = (headers?: ApiHeader): Record<string, string> => {
     let headersRequest = {};
+
     if (headers) {
       if (headers.contentType !== undefined) {
         headersRequest = {
@@ -142,6 +149,7 @@ export default class DefaultHttpService implements HttpService {
               : this.headerValueContentTypeFormData,
         };
       }
+
       if (headers.authorization) {
         headersRequest = {
           ...headersRequest,

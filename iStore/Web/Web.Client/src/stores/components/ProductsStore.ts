@@ -4,7 +4,6 @@ import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
 import { IoCTypes } from '../../ioc';
-import i18n from '../../locales/config';
 import type { Product } from '../../models';
 import type { ProductsService } from '../../services';
 
@@ -16,8 +15,6 @@ export default class ProductsStore {
   isLoading = false;
   products: Product[] = [];
   product: Product | undefined = undefined;
-  error = '';
-  queryString = '';
   totalPages = 0;
   currentPage = 1;
   pageLimit = 6;
@@ -31,13 +28,9 @@ export default class ProductsStore {
     makeAutoObservable(this);
   }
 
-  public init = (): void => {
-    this.error = '';
+  public getById = async (id: number): Promise<Product | undefined> => {
     this.product = undefined;
-  };
 
-  public getById = async (id: number): Promise<number | undefined> => {
-    this.init();
     try {
       this.isLoading = true;
       const result = await this.productsService.getById(id);
@@ -45,21 +38,22 @@ export default class ProductsStore {
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
-        this.error = error.message;
       }
     }
+
     this.isLoading = false;
 
-    return this.product?.id;
+    return this.product;
   };
 
   public getItems = async (): Promise<void> => {
-    this.init();
     const urlParameters = new URLSearchParams(window.location.search);
     const page = urlParameters.get('_page');
     const limit = urlParameters.get('_limit');
+    this.product = undefined;
     this.currentPage = page ? Number(page) : Number(1);
     this.pageLimit = limit ? Number(limit) : Number(6);
+
     try {
       this.isLoading = true;
       const result = await this.productsService.getItems({
@@ -73,41 +67,13 @@ export default class ProductsStore {
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
-        console.error(error.message);
       }
     }
-    this.isLoading = false;
-  };
 
-  public search = async (): Promise<void> => {
-    this.init();
-    try {
-      this.isLoading = true;
-      const id = Number(this.queryString);
-      if (Number.isNaN(id)) {
-        this.queryString = '';
-        this.error = i18n.t('products:error.input');
-
-        return;
-      }
-      const result = await this.productsService.getById(id);
-      this.product = { ...result };
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-        this.queryString = '';
-        this.error = error.message;
-      }
-    }
-    this.queryString = '';
     this.isLoading = false;
   };
 
   public changePage = (page: number): void => {
     this.currentPage = page;
-  };
-
-  public changeQueryString = (query: string): void => {
-    this.queryString = query;
   };
 }

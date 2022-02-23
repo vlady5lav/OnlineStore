@@ -141,7 +141,15 @@
         "switches": "always"
       }
     ],
-    "padding-line-between-statements": ["warn", { "blankLine": "always", "prev": "block-like", "next": "return" }],
+    "padding-line-between-statements": [
+      "warn",
+      { "blankLine": "always", "prev": "*", "next": ["block", "block-like"] },
+      { "blankLine": "always", "prev": ["block", "block-like"], "next": "*" },
+      { "blankLine": "always", "prev": "*", "next": "export" },
+      { "blankLine": "always", "prev": "*", "next": "return" },
+      { "blankLine": "any", "prev": "import", "next": "import" },
+      { "blankLine": "any", "prev": "export", "next": "export" }
+    ],
     "prefer-const": "warn",
     "prefer-destructuring": "off",
     "prettier/prettier": [

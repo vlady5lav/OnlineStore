@@ -1,5 +1,6 @@
-export { default as Signin } from './Signin';
-export { default as SigninCallback } from './SigninCallback';
-export { default as Signout } from './Signout';
-export { default as SignoutCallback } from './SignoutCallback';
-export { default as SilentRenew } from './SilentRenew';
+export { default as SigninRedirect } from './SigninRedirect';
+export { default as SigninRedirectCallback } from './SigninRedirectCallback';
+export { default as SigninSilent } from './SigninSilent';
+export { default as SigninSilentCallback } from './SigninSilentCallback';
+export { default as SignoutRedirect } from './SignoutRedirect';
+export { default as SignoutRedirectCallback } from './SignoutRedirectCallback';

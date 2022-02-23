@@ -1,2 +1,3 @@
+cd ..
 dotnet test .
 pause

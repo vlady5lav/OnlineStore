@@ -1,33 +1,41 @@
 import 'reflect-metadata';
 import '../locales/config';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { LoadingSpinner } from 'components/LoadingSpinner';
 import { observer } from 'mobx-react';
 import { Outlet } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
-import { LoadingSpinner } from '../components/LoadingSpinner';
 import { IoCTypes, useInjection } from '../ioc';
 import { AuthStore } from '../stores';
 
 const AuthorizedOutlet = observer(() => {
   const authStore = useInjection<AuthStore>(IoCTypes.authStore);
 
-  if (!authStore.user) {
-    authStore.signinRedirect();
+  useEffect(() => {
+    const getAuthentication = async (): Promise<void> => {
+      await authStore.getUser();
 
-    return (
-      <>
-        <Box className="absoluteCentered">
-          <LoadingSpinner />
-        </Box>
-      </>
-    );
-  } else {
-    return <Outlet />;
-  }
+      if (!authStore.user) {
+        await authStore.signinRedirect();
+      }
+    };
+
+    getAuthentication().catch((error) => console.log(error));
+  }, [authStore]);
+
+  return authStore.user ? (
+    <Outlet />
+  ) : (
+    <>
+      <Box className="absoluteCentered">
+        <LoadingSpinner />
+      </Box>
+    </>
+  );
 });
 
 export default AuthorizedOutlet;

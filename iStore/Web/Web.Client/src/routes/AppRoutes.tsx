@@ -10,10 +10,16 @@ import { AuthorizedOutlet } from 'routes';
 import { Box } from '@mui/material';
 
 import { LoadingSpinner } from '../components/LoadingSpinner';
-import { SigninCallback, Signout, SignoutCallback, SilentRenew } from '../components/OidcAuthorization';
+import {
+  SigninRedirect,
+  SigninRedirectCallback,
+  SigninSilentCallback,
+  SignoutRedirect,
+  SignoutRedirectCallback,
+} from '../components/OidcAuthorization';
 import { Layout } from '../containers/Layout';
-import { Signin } from '../containers/Signin';
 
+const Cart = React.lazy(() => import('../containers/Cart/Cart'));
 const Product = React.lazy(() => import('../containers/Product/Product'));
 const Products = React.lazy(() => import('../containers/Products/Products'));
 
@@ -33,14 +39,15 @@ const AppRoutes = observer(() => {
             <Route index element={<Products />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<Product />} />
-            <Route path="/silentrenew" element={<SilentRenew />} />
-            <Route path="/signin-oidc" element={<SigninCallback />} />
-            <Route path="/signin/callback" element={<SigninCallback />} />
-            <Route path="/signout-oidc" element={<SignoutCallback />} />
-            <Route path="/signout/callback" element={<SignoutCallback />} />
-            <Route path="/signout" element={<Signout />} />
+            <Route path="/signin" element={<SigninRedirect />} />
+            <Route path="/signin-oidc" element={<SigninRedirectCallback />} />
+            <Route path="/signin/callback" element={<SigninRedirectCallback />} />
+            <Route path="/signout-oidc" element={<SignoutRedirectCallback />} />
+            <Route path="/signout/callback" element={<SignoutRedirectCallback />} />
+            <Route path="/signout" element={<SignoutRedirect />} />
+            <Route path="/silentrenew" element={<SigninSilentCallback />} />
             <Route element={<AuthorizedOutlet />}>
-              <Route path="/signin" element={<Signin />} />
+              <Route path="/cart" element={<Cart />} />
             </Route>
           </Route>
         </Routes>
